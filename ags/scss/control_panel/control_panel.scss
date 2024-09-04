@@ -1,0 +1,245 @@
+.control_panel {
+  .panel {
+    background-color: $background;
+    box-shadow: $box_shadow;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    .toggle-button {
+      border-radius: 8px;
+      min-width: 120px;
+      min-height: 44px;
+      color: $foreground;
+      font-weight:600;
+      box-shadow: 2px 2px 2px 0 #0e0e0e;
+
+      label {
+        margin-left: 10px;
+      }
+
+      button {
+        border-radius: 8px;
+        color: $foreground;
+        background-color: $background2;
+        background-image: none;
+        box-shadow: none;
+
+        &:hover {
+          background-color: $hover1;
+          // color: darken($foreground, 10%);
+        }
+
+        &:first-child {
+          padding: 12px;
+          min-width: 100px;
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 0;
+        }
+
+        &:last-child {
+          padding: 6px;
+          min-width: 20px;
+          border-top-left-radius: 0;
+          border-bottom-left-radius: 0;
+          margin-left: 2px;
+        }
+      }
+    }
+    .sliders {
+      box-shadow: 2px 2px 2px 0 #0e0e0e;
+      background-color: $background2;
+      border-radius: 10px;
+    }
+    .sliderContainer {
+      color: $foreground;
+      border-radius: 6px;
+      image {
+        font-size: 20px;
+      }
+      image,
+      label {
+        padding: 5px;
+      }
+      scale {
+        all: unset;
+        trough {
+          transition: 200ms;
+          border-radius: 10px;
+          background-color: $background;
+          min-height: 10px;
+          min-width: 5px;
+
+          highlight,
+          progress {
+            background-color: $background6;
+            border-radius: 20px;
+            min-height: 5px;
+            min-width: 5px;
+          }
+        }
+
+        slider {
+          box-shadow: none;
+          background-color: transparent;
+          border: 1px solid transparent;
+          transition: 200ms;
+          border-radius: 10px;
+          min-height: 12px;
+          min-width: 12px;
+          margin: -4px;
+        }
+
+        &:hover {
+          slider {
+            background-color: $foreground;
+          }
+        }
+      }
+      .arrow {
+        border-radius: 5px;
+        &:hover {
+          // box-shadow: $box_shadow;
+          background-color: $hover1;
+        }
+      }
+    }
+    .menu {
+      all: unset;
+      color: $foreground;
+      margin-top: 10px;
+
+      button {
+        all: unset;
+        transition: 200ms;
+        border-radius: 5px;
+        color: $foreground;
+        margin: 4px;
+        padding: 3px;
+        background-color: transparent;
+
+        &:hover {
+          background-color: $hover1;
+        }
+        image {
+          font-size: 20px;
+        }
+      }
+      .bluetooth-devices {
+        all: unset;
+        switch {
+          background-color: $background6;
+          border-radius: 20px;
+          margin: 2px 5px;
+          slider {
+            margin: 2px;
+            min-width: 20px;
+            min-height: 5px;
+            background-color: $background2;
+            border-radius: 20px;
+          }
+          image {
+            color: $background6;
+          }
+          &:hover {
+            border-radius: 20px;
+          }
+          &:checked {
+            background-color: $foreground;
+            image {
+              color: $foreground;
+            }
+          }
+        }
+      }
+      .bt_name,
+      .bt_icon {
+        margin: 0 10px;
+      }
+    }
+    .volume-indicator {
+      border-radius: 5px;
+      color: $foreground;
+      margin: 4px;
+      padding: 2px;
+      background-color: transparent;
+
+      &:hover {
+        // box-shadow: $box_shadow;
+        background-color: $hover1;
+      }
+    }
+    .audio {
+      background-color: transparent;
+      margin: 0;
+      padding: 0;
+    }
+    .appearance {
+      background-color: $background2;
+      box-shadow: 2px 2px 2px 0 #0e0e0e;
+      padding: 10px;
+      border-radius: 10px;
+      .setGlobal {
+        .my-switch {
+          padding: 2px;
+          switch {
+            background-color: $background6;
+            border-radius: 20px;
+            slider {
+              margin: 2px;
+              min-height: 7px;
+              min-width: 15px;
+              background-color: $background2;
+              border-radius: 20px;
+            }
+            &:last-child,
+            &image:nth-child(2) {
+              color: $background6;
+            }
+            &:checked {
+              background-color: $foreground;
+              image {
+                color: $foreground;
+              }
+            }
+          }
+        }
+      }
+      .toggleBtn {
+        border-radius: 8px;
+        box-shadow: 2px 2px 2px 0 #0e0e0e;
+        min-width: 100px;
+        min-height: 44px;
+        color: $foreground;
+        font-weight: bold;
+        background-color: $background5;
+        padding: 0 10px;
+        &:hover {
+          background-color: $hover1;
+        }
+      }
+      .color_picker {
+        .pickerBtn {
+          border-radius: 10px;
+          min-width: 15px;
+          padding: 8px;
+          color: $foreground;
+          background-color: $background5;
+          box-shadow: 2px 2px 2px 0 #0e0e0e;
+          &:hover {
+            background-color: $hover1;
+          }
+        }
+        .colorBtn {
+          border: 1px solid $foreground;
+        }
+        .colorBtn:hover {
+          box-shadow: $box_shadow;
+        }
+      }
+      label {
+        color: $foreground;
+        font-weight:300;
+      }
+    }
+  }
+}

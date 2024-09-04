@@ -1,0 +1,18 @@
+$foreground:rgba(190, 190, 190, 1);
+
+
+$background:  #1F2830;
+$background2: lighten($background, 5%);
+$background3: darken($foreground, 50%);
+$background4: lighten(#323449, 30%);
+$background5: lighten($background2, 4%);
+$background6: lighten($background, 20%);
+
+
+$hover1: lighten($background, 15%);
+$hover2: lighten($background, 70%);
+$hover3: lighten($background, 10%);
+
+$text_shadow: 1px 1px 2px lighten($background, 4%);
+$shadow_color: #6f6f6f;
+$box_shadow: 1px 1px 2px 0 $shadow_color;

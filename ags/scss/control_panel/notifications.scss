@@ -1,0 +1,41 @@
+.notification_widget {
+  border-radius: 10px;
+  background-color: $background2;
+  box-shadow: 2px 2px 2px 0 #0e0e0e;
+  color: $foreground;
+  padding: 4px;
+  .notify_center {
+    &:first-child{
+      padding: 0;
+    }
+    .notify_container {
+      min-height: 150px;
+      .notification {
+        all: unset;
+        border-radius: 10px;
+        background-color: $background;
+        padding: 5px;
+        margin: 5px;
+        // box-shadow: $box_shadow;
+        color: $foreground;
+        .description {
+          min-width: 0px;
+        }
+      }
+    }
+  }
+  .header {
+    button {
+      padding: 6px;
+      border-radius:10px;
+      &:hover {
+        // box-shadow: $box_shadow;
+        background-color: $hover1;
+      }
+    }
+    icon {
+      color: $foreground;
+      font-size: 22px;
+    }
+  }
+}

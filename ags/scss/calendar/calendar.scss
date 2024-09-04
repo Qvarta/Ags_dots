@@ -1,0 +1,26 @@
+
+calendar {
+  background-color: $background;
+  box-shadow: none;
+  color: $foreground;
+  border-radius: 10px;
+  font-size: 1em;
+  font-weight: bold;
+  padding: 0.5em;
+  &.header {
+    border: none;
+    box-shadow: none;
+    background-color: $background2;
+  }
+  &:selected {
+    color: $red;
+  }
+  &.button {
+    background-color: transparent;
+    margin-top: 20px;
+  }
+  &:indeterminate {
+    color: transparentize($foreground, 0.8);
+    box-shadow: none;
+  }
+}

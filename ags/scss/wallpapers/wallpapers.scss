@@ -1,0 +1,38 @@
+.wallpaper {
+  background-color: transparentize($background, 0.1);
+  box-shadow: $box_shadow;
+  min-width: 780px;
+  min-height: 150px;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 10px;
+  .scrollable {
+    min-height: 550px;
+    label {
+      color: $foreground;
+    }
+    // trough {
+    //   border-radius: 10px;
+    //   background-color: $background2;
+    //   slider {
+    //     min-width: 10px;
+    //     border-radius: 10px;
+    //     background-color: $foreground;
+    //   }
+    // }
+  }
+  .wallpaperButton {
+    border-radius: 10px;
+    border: 1px solid transparent;
+    padding: 2px;
+    margin: 5px;
+    min-width: 100px;
+    &:focus {
+      background-color: $foreground;
+    }
+    &:hover {
+      background-color: $background4;
+      box-shadow: $box_shadow;
+    }
+  }
+}

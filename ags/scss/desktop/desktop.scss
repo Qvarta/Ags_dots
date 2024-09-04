@@ -1,0 +1,93 @@
+.desktopWindow {
+  margin: 10px;
+  label {
+    color: $foreground;
+    text-shadow: none;
+  }
+  .yellow {
+    text-shadow: 1px 1px 2px rgb(0, 0, 0);
+    color: rgb(255, 161, 12);
+  }
+  .dayNow,
+  .timeNow,
+  .nowPlaying,
+  .weatherInfo,
+  .system_info {
+    margin: 5px 10px;
+    padding: 10px;
+    box-shadow: $box_shadow;
+    border-radius: 10px;
+    background-color: transparentize($background, 0.2);
+  }
+  .system_info,
+  .timeNow {
+    min-height: 120px;
+    min-width: 120px;
+    .zone_text{
+      font-size: 14px;
+    }
+    .sys_label {
+      min-width: 30px;
+      color: $background;
+      box-shadow: none;
+      padding: 10px 5px;
+      background-color: transparentize($foreground, 0.1);
+      border-radius: 5px;
+      margin: 10px;
+      font-size: 14px;
+    }
+    label{
+      font-weight: bold;
+    }
+  }
+  .weatherInfo {
+    .long_date {
+      font-family: "Impact";
+      font-size: 16px;
+    }
+    .update {
+      font-size: 14px;
+    }
+  }
+  .nowPlaying {
+    label {
+      color: $foreground;
+    }
+    .player_icon {
+      padding: 10px;
+      background-color: transparentize($foreground, 0.1);
+      border-radius: 10px;
+      color: $background;
+      font-size: 18px;
+    }
+    .artist {
+      font-size: 20px;
+      font-weight: bold;
+    }
+    .track_title {
+      font-size: 18px;
+    }
+  }
+  .dayNow {
+    .date_digit {
+      color: $background;
+      box-shadow: none;
+      padding: 5px 10px;
+      background-color: transparentize($foreground, 0.1);
+      border-radius: 10px;
+      margin-right: 20px;
+      font-size: 40px;
+      font-weight: bold;
+    }
+    .date_text {
+      .weekday {
+        font-weight: bold;
+      }
+    }
+  }
+  .time_digit {
+    color: $foreground;
+    font-size: 40px;
+    font-weight: bold;
+  }
+}

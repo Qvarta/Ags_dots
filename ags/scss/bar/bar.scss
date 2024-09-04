@@ -1,0 +1,107 @@
+.bar {
+  background-color: $background;
+  margin: 5px;
+  border-radius: 10px;
+  box-shadow: $box_shadow;
+
+  .bar_module {
+    margin: 4px 1px;
+    padding: 0 8px;
+    color: $foreground;
+    &.left {
+      margin-left: 5px;
+    }
+    &.red {
+      color: $red;
+      margin-right: 5px;
+    }
+    &:hover {
+      background-color: $background4;
+      border-radius: 20px;
+      color:$background;
+    }
+  }
+
+  .left {
+    .weather {
+      padding: 0 10px;
+      margin: 3px 30px;
+      color: $foreground;
+
+      &:hover {
+        border-radius: 4px;
+        color:$background;
+        background-color: $background4;
+      }
+    }
+  }
+
+  .center {
+    button {
+      transition: all 0.3s ease-out;
+      border-radius: 8px;
+      min-height: 12px;
+      padding: 0 6px;
+      background-color: $background3;
+      &:hover {
+        background-color: $hover2;
+      }
+      &.occupied {
+        background-color: $foreground;
+      }
+      &.active {
+        padding: 0 25px;
+        background-color: $foreground;
+      }
+    }
+  }
+  .right {
+    .trayContainer {
+      &:hover {
+        .bar_module {
+          background-color: $background4;
+          color: $background;
+          border-radius: 4px;
+        }
+      }
+    }
+    .layoutBtn {
+      margin: 4px 1px;
+      padding: 0 5px;
+      .layout {
+        // background-color: $hover1;
+        color: $foreground;
+        padding: 4px;
+        font-size: 14px;
+        font-weight: 600;
+        border-radius: 4px;
+      }
+      &:hover {
+        .layout {
+          background-color: $background4;
+          color: $background;
+        }
+      }
+    }
+    .clockBtn {
+      margin: 4px 1px;
+      padding: 0 5px;
+      .clock {
+        color: $foreground;
+        padding: 4px;
+        font-size: 16px;
+        font-weight: 600;
+        border-radius: 4px;
+      }
+      &:hover {
+        .clock {
+          background-color: $background4;
+          color: $background;
+        }
+      }
+    }
+    .charging {
+      color: green;
+    }
+  }
+}

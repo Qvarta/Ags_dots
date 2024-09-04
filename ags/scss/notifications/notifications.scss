@@ -1,0 +1,90 @@
+.notification {
+  border-radius: 15px;
+  background-color: $background;
+  margin: 25px 25px 20px 0px;
+  padding: 5px;
+  box-shadow: $box_shadow;
+  color: $foreground;
+
+  &.critical {
+    color: $red;
+  }
+
+  .content {
+    .title {
+      margin-top: 5px;
+      margin-right: 10px;
+      color: $foreground;
+      font-size: 1.2em;
+    }
+
+    .time {
+      color: transparentize($foreground, 0.2);
+      margin: 5px 10px;
+    }
+
+    .description {
+      font-size: 0.9em;
+      color: transparentize($foreground, 0.2);
+    }
+
+    .icon {
+      border-radius: 10px;
+      margin-right: 10px;
+
+      &.img {
+        border: $border;
+      }
+    }
+  }
+
+  box.actions {
+    // @include spacing(0.5);
+    margin-top: 10px;
+
+    button {
+      // @include button;
+      background-color: red;
+      border: 2px solid blue;
+      border-radius: 10px;
+      font-size: 1.2em;
+      margin: 0px 10px 10px 0px;
+      padding: 10px;
+
+      &:first-child {
+        margin: 0px 10px 10px 10px;
+      }
+
+      &:hover {
+        background-color: yellowgreen;
+        border: 2px solid red;
+      }
+    }
+  }
+
+  button.close-button {
+    margin: 0px 0px 0px 0px;
+    border-radius: 10px;
+    min-width: 30px;
+    min-height: 30px;
+    background-color: rgba(0, 0, 0, 0); 
+    padding: 0px;
+
+    &:hover {
+      background-color: transparentize($yellow, 0.5);
+    }
+
+    &:active {
+      background-image: none;
+      background-color: $red;
+    }
+  }
+
+  &:hover button.close-button {
+    background-color: transparentize(rgb(233, 86, 86), 0.5);
+  }
+
+  .description {
+    min-width: 350px;
+  }
+}

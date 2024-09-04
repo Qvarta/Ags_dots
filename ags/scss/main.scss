@@ -1,0 +1,25 @@
+@import "colors.scss";
+
+$green: #09611f;
+$red: #cc241d;
+$yellow: #9a5f24;
+$blue: #333346;
+
+
+$border: 1px solid $foreground;
+
+@import "bar/bar.scss";
+@import "weather/weather.scss";
+@import "desktop/desktop.scss";
+@import "calendar/calendar.scss";
+@import "screen_menu/screen_menu.scss";
+@import "launcher/launcher.scss";
+@import "control_panel/control_panel.scss";
+@import "control_panel/notifications.scss";
+@import "control_panel/promt.scss";
+@import "control_panel/media.scss";
+@import "wallpapers/wallpapers.scss";
+@import "updates/updates.scss";
+@import "notifications/notifications.scss";
+
+

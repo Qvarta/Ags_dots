@@ -1,0 +1,18 @@
+$foreground: rgb(52, 53, 64);
+
+$background:  rgb(233, 233, 237);
+$background2: darken($background, 5%);
+$background3: lighten($foreground, 40%);
+$background4: lighten($foreground, 30%);
+$background5: darken($background2, 6%);
+$background6: darken($background, 20%);
+
+
+$hover1: darken($background, 15%);
+$hover2: darken($background, 70%);
+$hover3: darken($background, 10%);
+
+
+$text_shadow: 1px 1px 2px gray;
+$shadow_color: #000000;
+$box_shadow: 2px 2px 2px 0 $shadow_color;

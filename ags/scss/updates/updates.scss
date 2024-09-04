@@ -1,0 +1,71 @@
+.updates {
+  padding: 20px;
+
+  .title {
+    background-color: $background;
+    box-shadow: $box_shadow;
+    padding: 10px;
+    border-radius: 10px 10px 0 0;
+  }
+
+  .footer {
+    background-color: $background;
+    box-shadow: $box_shadow;
+    padding: 10px;
+    border-radius: 0 0 10px 10px;
+  }
+  .scrollable {
+    min-height: 400px;
+    background-color: $background2;
+    box-shadow: 1px 0px 2px 0 $shadow_color;
+    padding: 10px;
+  }
+  .updates_item {
+    &:hover,
+    &:focus {
+      background-color: $hover1;
+      box-shadow: $box_shadow;
+    }
+  }
+
+  .max-width {
+    min-width: 200px;
+  }
+  .min-width {
+    min-width: 100px;
+  }
+  label {
+    color: $foreground;
+    padding: 5px 10px;
+  }
+}
+.info {
+  background-color: transparent;
+  .info_box {
+    margin: 10px;
+    min-width: 400px;
+    background-color: $background;
+    box-shadow: $box_shadow;
+    padding: 10px;
+    border-radius: 10px;
+    label {
+      color: $foreground;
+    }
+    .title {
+      font-size: 24px;
+      margin: 5px;
+    }
+    .description {
+      border-radius: 6px 0 0 6px;
+      background-color: $background2;
+      margin-right: 2px;
+      padding: 10px;
+    }
+    .size {
+      border-radius: 0 6px 6px 0;
+      background-color: $background2;
+      margin: 2px;
+      padding: 10px;
+    }
+  }
+}

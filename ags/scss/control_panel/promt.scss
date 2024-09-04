@@ -1,0 +1,20 @@
+.promt_content {
+  border-radius:10px;
+  background-color: $background;
+  padding: 5px;
+  box-shadow: $box_shadow;
+  min-width: 250px;
+  margin: 10px;
+  entry {
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    color: $foreground;
+    font-size: 16px;
+    background-color: $background2;
+    image {
+      color: $foreground;
+      margin:0 20px 0 10px;
+    }
+  }
+}

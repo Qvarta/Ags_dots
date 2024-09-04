@@ -1,0 +1,27 @@
+.weatherWidget {
+  margin-left: 10px;
+  min-width: 300px;
+  color: $foreground;
+  .weatherNow {
+    margin: 5px;
+    padding: 5px;
+    .title_label {
+      font-size: 20px;
+    }
+    .down {
+      background-color: $background;
+      padding: 10px 5px;
+      margin: 5px;
+      border-radius: 10px;
+      box-shadow: $box_shadow;
+
+      .weatherBtn {
+        &:hover {
+          background-color: $background2;
+          box-shadow: $box_shadow;
+          border-radius: 10px;
+        }
+      }
+    }
+  }
+}
