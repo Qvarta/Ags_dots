@@ -2,6 +2,7 @@ import GLib from "gi://GLib";
 import Gdk from "gi://Gdk?version=3.0";
 import GdkPixbuf from "gi://GdkPixbuf";
 import Gio from "gi://Gio";
+import Gtk from "gi://Gtk";
 
 import App from "resource:///com/github/Aylur/ags/app.js";
 import Service from "resource:///com/github/Aylur/ags/service.js";
@@ -37,4 +38,5 @@ export {
   Gdk,
   GdkPixbuf,
   Gio,
+  Gtk,
 };

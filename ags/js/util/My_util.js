@@ -1,19 +1,57 @@
-import { GLib, Gio, GdkPixbuf, Utils, Gdk , Variable } from "../import.js";
+import { GLib, Gio, GdkPixbuf, Utils, Gdk, Gtk, Variable } from "../import.js";
 
-const divide = ([total, free]) => free / total
-export const ramval = Variable(0, {
-  poll: [2000, 'free', out => Math.round(divide(out.split('\n').find(line => line.includes('Mem:')).split(/\s+/).splice(1, 2))*100).toString() + "%"],
-})
-export const cpuval = Variable(0, {
-  poll: [2000, 'top -b -n 1', out => Math.round(divide([100, out.split('\n').find(line => line.includes('Cpu(s)')).split(/\s+/)[1].replace(',', '.')])*100).toString() + "%"],
-})
-export const user_config = GLib.get_user_config_dir();
-export const user_home = GLib.get_home_dir();
-export const user_name = GLib.get_user_name();
 export const time = Variable(GLib.DateTime.new_now_local(), {
   poll: [5000, () => GLib.DateTime.new_now_local()],
 });
-
+const divide = ([total, free]) => free / total;
+export const ramval = Variable(0, {
+  poll: [
+    2000,
+    "free",
+    (out) =>
+      Math.round(
+        divide(
+          out
+            .split("\n")
+            .find((line) => line.includes("Mem:"))
+            .split(/\s+/)
+            .splice(1, 2)
+        ) * 100
+      ).toString() + "%",
+  ],
+});
+export const cpuval = Variable(0, {
+  poll: [
+    2000,
+    "top -b -n 1",
+    (out) =>
+      Math.round(
+        divide([
+          100,
+          out
+            .split("\n")
+            .find((line) => line.includes("Cpu(s)"))
+            .split(/\s+/)[1]
+            .replace(",", "."),
+        ]) * 100
+      ).toString() + "%",
+  ],
+});
+export const user ={
+  name: GLib.get_user_name(),
+  data: GLib.get_user_data_dir(),
+  config: GLib.get_user_config_dir(),
+  home: GLib.get_home_dir(),
+};
+export const distro = {
+  id: GLib.get_os_info("ID"),
+  logo: GLib.get_os_info("LOGO"),
+}
+/**
+ * Returns the current timezone as a string.
+ *
+ * @return {string} The current timezone as a string.
+ */
 export function getTimezone() {
   const datetime = GLib.DateTime.new_now_local();
   const timezone = datetime.get_timezone();
@@ -27,11 +65,15 @@ export function getTimezone() {
 export function isNetwork(text) {
   const networkMonitor = Gio.NetworkMonitor.get_default();
   if (!networkMonitor.network_available) {
-    Utils.notify(`Error receiving ${text}`, "Network is not available", "network-wireless-offline-symbolic");
+    Utils.notify(
+      `Error receiving ${text}`,
+      "Network is not available",
+      "network-wireless-offline-symbolic"
+    );
     return false;
-  };
+  }
   return true;
-};
+}
 /**
  * Checks if a program is installed on the system.
  *
@@ -39,14 +81,18 @@ export function isNetwork(text) {
  * @return {boolean} True if the program is installed, false otherwise.
  */
 export function checkProgramInstalled(programName) {
-    const result = GLib.spawn_command_line_sync(`bash -c "which ${programName}"`);
-    const decoder = new TextDecoder('utf-8');
-    const output = decoder.decode(result[1]).trim();
-    if (output == '') {
-      Utils.notify({summary:programName, body:`Not installed.`, iconName:"dialog-error-symbolic"});
-      return false;
-    } 
-    return true;
+  const result = GLib.spawn_command_line_sync(`bash -c "which ${programName}"`);
+  const decoder = new TextDecoder("utf-8");
+  const output = decoder.decode(result[1]).trim();
+  if (output == "") {
+    Utils.notify({
+      summary: programName,
+      body: `Not installed.`,
+      iconName: "dialog-error-symbolic",
+    });
+    return false;
+  }
+  return true;
 }
 /**
  * Executes a program asynchronously.
@@ -55,7 +101,7 @@ export function checkProgramInstalled(programName) {
  * @return {void} This function does not return anything.
  */
 export function exec_async(programName) {
-    GLib.spawn_command_line_async(`bash -c ${programName}`);
+  GLib.spawn_command_line_async(`bash -c ${programName}`);
 }
 /**
  * Executes a program synchronously and returns its output.
@@ -65,10 +111,12 @@ export function exec_async(programName) {
  * @return {string} The output of the program.
  */
 export function exec_sync(programName, needsQuotes = false) {
-    const command = needsQuotes ? `bash -c "${programName}"` : `bash -c ${programName}`;
-    const result = GLib.spawn_command_line_sync(command);
-    const decoder = new TextDecoder('utf-8');
-    return decoder.decode(result[1]).trim();
+  const command = needsQuotes
+    ? `bash -c "${programName}"`
+    : `bash -c ${programName}`;
+  const result = GLib.spawn_command_line_sync(command);
+  const decoder = new TextDecoder("utf-8");
+  return decoder.decode(result[1]).trim();
 }
 /**
  * Lists the files in a directory.
@@ -77,15 +125,17 @@ export function exec_sync(programName, needsQuotes = false) {
  * @return {array} An array of file names in the directory.
  */
 export function list_dir(path) {
-    const dir = GLib.Dir.open(path, 0);
-    const list = [];
-    while (true) {
-      const name = dir.read_name();
-      if (name === null) {break;}
-      list.push(name);
+  const dir = GLib.Dir.open(path, 0);
+  const list = [];
+  while (true) {
+    const name = dir.read_name();
+    if (name === null) {
+      break;
     }
-    dir.close();
-    return list;
+    list.push(name);
+  }
+  dir.close();
+  return list;
 }
 /**
  * Creates a symbolic link to a file.
@@ -101,8 +151,8 @@ export function symlink(filePath, linkPath) {
   }
   const link = file_link.make_symbolic_link(filePath, null);
   if (!link) {
-      console.log("Не удалось создать ссылку");
-  };
+    console.log("Не удалось создать ссылку");
+  }
 }
 /**
  * Checks if a directory is empty.
@@ -131,12 +181,19 @@ export function is_empty(path) {
  */
 export function cash_image(img_path, img_file, cash_path, width, height) {
   // Сделать из нее  субпроцесс
-  const pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(`${img_path}/${img_file}`,width,height,false);
+  const pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(
+    `${img_path}/${img_file}`,
+    width,
+    height,
+    false
+  );
   if (!pixbuf) {
-    console.log("Не удалось загрузить изображение"); 
+    console.log("Не удалось загрузить изображение");
     return;
-  };
-  const outputStream = Gio.File.new_for_path(`${cash_path}/${img_file}`).replace(null, false, Gio.FileCreateFlags.NONE, null);
+  }
+  const outputStream = Gio.File.new_for_path(
+    `${cash_path}/${img_file}`
+  ).replace(null, false, Gio.FileCreateFlags.NONE, null);
   pixbuf.save_to_streamv(outputStream, "jpeg", null, null, null);
   outputStream.close(null);
 }
@@ -167,8 +224,10 @@ export function get_local_time(timestamp, format) {
  */
 export function get_updates() {
   return new Promise((resolve, reject) => {
-    const [success, stdout, stderr, exitStatus] = GLib.spawn_command_line_sync(`bash -c "dnf -q check-update"`);
-    const decoder = new TextDecoder('utf-8');
+    const [success, stdout, stderr, exitStatus] = GLib.spawn_command_line_sync(
+      `bash -c "dnf -q check-update"`
+    );
+    const decoder = new TextDecoder("utf-8");
 
     if (success) {
       const output = decoder.decode(stdout);
@@ -189,7 +248,7 @@ export function get_updates() {
             version: packageVersion,
             repository: packageRepository,
           });
-        };
+        }
       });
 
       resolve(JSON.stringify(packages, null, 2));
@@ -206,33 +265,35 @@ export function get_updates() {
  */
 export function get_package_info(package_name) {
   return new Promise((resolve, reject) => {
-    const [success, stdout, stderr, exitStatus] = GLib.spawn_command_line_sync(`bash -c "dnf -q info --upgrades ${package_name}"`);
-    const decoder = new TextDecoder('utf-8');
+    const [success, stdout, stderr, exitStatus] = GLib.spawn_command_line_sync(
+      `bash -c "dnf -q info --upgrades ${package_name}"`
+    );
+    const decoder = new TextDecoder("utf-8");
 
     if (success) {
       const text = decoder.decode(stdout);
 
       const packages = text.split(/\n\n/)[0];
 
-      const lines = packages.split('\n').slice(1);
+      const lines = packages.split("\n").slice(1);
 
-      const package_name = lines[0].split(': ')[1];
-      const version = lines[1].split(': ')[1];
-      const size = lines[4].split(': ')[1];
-      let descr = lines[10].split(': ')[1];
+      const package_name = lines[0].split(": ")[1];
+      const version = lines[1].split(": ")[1];
+      const size = lines[4].split(": ")[1];
+      let descr = lines[10].split(": ")[1];
       for (let i = 11; i < lines.length; i++) {
-        descr += lines[i].trim() + ' ';
+        descr += lines[i].trim() + " ";
       }
 
-      descr = descr.replace(/[\n\t:]/g, '').trim();
+      descr = descr.replace(/[\n\t:]/g, "").trim();
 
       const result = {
         name: package_name,
         version: version,
         size: size,
-        description: descr
+        description: descr,
       };
-    
+
       resolve(JSON.stringify(result, null, 2));
     } else {
       reject(decoder.decode(stderr));
@@ -246,5 +307,37 @@ export function get_package_info(package_name) {
  */
 export function get_screen_resolution() {
   const screen = Gdk.Screen.get_default();
-  return {"width":screen.get_width(), "height":screen.get_height()};
+  return { width: screen.get_width(), height: screen.get_height() };
 }
+  /**
+   * Checks if a theme is installed on the system.
+   *
+   * @param {string} name - The name of the theme to check.
+   * @return {boolean} True if the theme is installed, false otherwise.
+   */
+export function checkTheme(name) {
+  let themeExists = false;
+  const provider = Gtk.CssProvider.get_default();
+  const paths = [
+    `${user.home}/.themes/${name}/gtk-3.0/gtk.css`,
+    `${user.data}/themes/${name}/gtk-3.0/gtk.css`,
+    `/usr/local/share/themes/${name}/gtk-3.0/gtk.css`,
+    `/usr/share/themes/${name}/gtk-3.0/gtk.css`,
+  ];
+  for (const path of paths) {
+    try {
+      provider.load_from_path(path);
+      themeExists = true;
+      break;
+    } catch (error) {}
+  }
+
+  if (!themeExists)
+    Utils.notify({
+      summary: "Theme error",
+      body: `${name} not installed.`,
+      iconName: "dialog-error-symbolic",
+    });
+  return themeExists;  
+}
+

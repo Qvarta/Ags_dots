@@ -1,5 +1,6 @@
+import { Variable } from "../../import.js";
 import colorpicker from "../../services/colorService.js"
-
+const cols = Variable([]);
 
 const css = (color) => `
 * {
@@ -17,7 +18,7 @@ export const colorPicker = () => {
         css: css(color),
         class_name: "colorBtn",
         on_primary_click: () => colorpicker.to_clipboard(color),
-        on_secondary_click: () => colorpicker.colors = [],
+        on_secondary_click: () => colorpicker.remove_color(color),
       }))),
       
     })
@@ -32,6 +33,7 @@ export const colorPicker = () => {
               Widget.Button({
                 class_name: "pickerBtn",
                 on_primary_click: () => colorpicker.pick_color(),
+                on_secondary_click: () => colorpicker.colors = [],
                 child: Widget.Icon({
                   icon: "color-picker-symbolic",
                   size: 22,

@@ -67,7 +67,7 @@ const DayNow = () => Widget.Box({
         Widget.Label({
             class_name: "date_digit",
             hpack: "start",
-            label: new Date().toLocaleDateString("ru-RU", {day: "2-digit"}),
+            label: time.bind().transform((t) => t.format("%d")),
           }),
         Widget.Box({
             vertical: true,
@@ -77,14 +77,11 @@ const DayNow = () => Widget.Box({
                 Widget.Label({
                     hpack: "start",
                     class_name: "weekday",
-                    label: new Date().toLocaleDateString("ru-RU", { weekday: "long" }).toUpperCase()
+                    label: time.bind().transform((t) => t.format("%A")),
                   }),
                   Widget.Label({
                     hpack: "start",
-                    label: new Date().toLocaleDateString("ru-RU", {
-                      month: "short",
-                      year: "numeric"
-                    })
+                    label: time.bind().transform((t) => t.format("%b. %Y г.")),
                   }),  
             ],
         }),

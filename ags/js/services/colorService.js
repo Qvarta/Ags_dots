@@ -11,7 +11,7 @@ class ColorPicker extends Service {
       this,
       {},
       {
-        colors: ["jsobject", "rw"],
+        colors: ["array", "rw"],
       }
     );
   }
@@ -19,10 +19,10 @@ class ColorPicker extends Service {
   #colors = [];
   set colors(colors) {
     this.#colors = colors;
-    this.UpdateProperty("colors", colors);
+    this.changed("#colors");
   }
   get colors() {
-    return [...this.#colors];
+    return this.#colors;
   }
   set colors(colors) {
     this.#colors = colors;
@@ -45,6 +45,11 @@ class ColorPicker extends Service {
       if (list.length > MAX_NUM_COLORS) list.shift();
       this.colors = list;
     }
+  }
+  remove_color(color) {
+    const colors_list = this.#colors.filter(item => item !== color);
+    this.#colors = colors_list;
+    this.changed("colors");
   }
 }
 

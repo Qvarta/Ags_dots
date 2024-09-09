@@ -5,7 +5,7 @@ import { Widget } from "../import.js";
 const WINDOW_NAME = "wallpapers";
 
 
-export default () =>
+export const Wallpapers = () =>
   PopupWindow({
     name: WINDOW_NAME,
     transition: "crossfade",

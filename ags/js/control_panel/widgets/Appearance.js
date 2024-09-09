@@ -2,6 +2,7 @@
 import { css, scss } from "../../main.js";
 import options from "../../options.js";
 import Themes from "../../services/appearanceService.js";
+import { checkTheme } from "../../util/My_util.js";
 
 const theme = Variable();
 const global = Variable(false);
@@ -18,6 +19,7 @@ const change_theme = () => {
   App.applyCss(css);
 
   if (global.value === true) {
+    if(!checkTheme(`Tokyonight-${theme.value}`)) return;
     Themes.hyprland = theme.value;
     Themes.vscode =theme.value === "Dark" ? "Tokyo Night" : "Tokyo Night Light";
     Themes.kitty = theme.value;

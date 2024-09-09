@@ -1,4 +1,4 @@
-import { user_config, get_screen_resolution } from "./util/My_util.js";
+import { user, get_screen_resolution } from "./util/My_util.js";
 
 export default {
   powermenu: {
@@ -38,19 +38,19 @@ export default {
     thumbnails: `${Utils.CACHE_DIR}/wallpapers/`,
     notify:`${Utils.CACHE_DIR}/notifications/notifications.json`,
     scss: `${App.configDir}/scss`,
-    gtk3: `${user_config}/gtk-3.0`,
-    gtk4: `${user_config}/gtk-4.0`,
-    micro: `${user_config}/micro`,
-    vscode: `${user_config}/VSCodium/User/settings.json`,
-    hyprland: `${user_config}/hypr/vars/theme.conf`,
-    kitty: `${user_config}/kitty`,
+    gtk3: `${user.config}/gtk-3.0`,
+    gtk4: `${user.config}/gtk-4.0`,
+    micro: `${user.config}/micro`,
+    vscode: `${user.config}/VSCodium/User/settings.json`,
+    hyprland: `${user.config}/hypr/vars/theme.conf`,
+    kitty: `${user.config}/kitty`,
     weather_icons: `${App.configDir}/icons`,
     test_json: `${App.configDir}/js/weather/test2.json`,
   },
   accuwearther: {
-    api_key: "rxMUgG932HbnBI1cdeBvbsKUD8zGhXpX",
-    city: "290898",
-    language: "ru-RU",
+    api_key: "",
+    city: "",
+    language: "",
   },
   screen:{
     width: get_screen_resolution().width,

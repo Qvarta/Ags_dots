@@ -65,8 +65,12 @@ class WeatherService extends Service {
     const command = `curl -s 'http://dataservice.accuweather.com/forecasts/v1/daily/5day/${city}?apikey=${api_key}&language=${language}&details=true&metric=true'`;
     Utils.timeout(4000, () => {
       if (!isNetwork("weather data")) return;
-      // Utils.execAsync(['bash', '-c', `${command}`])
-      Utils.readFileAsync(options.paths.test_json)
+      Utils.notify({
+        summary:"Used test JSON", 
+        body:`For use accuweather.com uncomment the line in weatherService.js. Change city, language and api_key in options.js`, 
+        iconName:"dialog-information-symbolic"});
+      Utils.readFileAsync(options.paths.test_json) //comment this and upper line lines to use accuweather.com
+      // Utils.execAsync(['bash', '-c', `${command}`]) //uncomment this line to use accuweather.com
       .then((result) => {
         const weather_json = JSON.parse(result);
         this.updateProperty("weather_data", weather_json);

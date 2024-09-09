@@ -1,6 +1,6 @@
 import {App, Utils} from "./import.js";
 import options from "./options.js";
-
+import { checkProgramInstalled } from "./util/My_util.js";
 import Bar from "./bar/bar.js";
 import Calendar from "./calendar/Calendar.js";
 import PowerMenu from "./power_menu/PowerMenu.js";
@@ -11,7 +11,7 @@ import {WeatherForecast} from "./weather/Weather.js";
 import NotificationPopups from "./notifications/NotificationPopups.js";
 import { PromtPopup } from "./control_panel/widgets/Network.js"; 
 import Desktop from "./desktop/desktop.js";
-import Wallpapers from "./wallpapers/Wallpapers.js";
+import {Wallpapers} from "./wallpapers/Wallpapers.js";
 import Updates from "./updates/updates.js";
 import PackegesInfo from "./updates/packegesInfo.js";
 
@@ -22,6 +22,9 @@ export const scss = `${App.configDir}/style.scss`;
 export const css = `/tmp/my-style.css`;
 
 // make sure sassc is installed on your system
+if (!checkProgramInstalled("sassc")) {
+  Utils.notify("Error", "Sassc is not installed", "dialog-error-symbolic");
+};
 Utils.exec(`sassc ${scss} ${css}`);
 
 App.config({

@@ -1,3 +1,4 @@
+import { distro } from "../../util/My_util.js";
 
   export default () =>
     Widget.Button({
@@ -6,7 +7,7 @@
       cursor: "pointer",
       child: Widget.Icon({
         className: "icon",
-        icon: "fedorasettings-symbolic",
-        size: 18,
+        icon: distro.logo,
+        size: 20,
       }),
     });
