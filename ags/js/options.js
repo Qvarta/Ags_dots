@@ -48,9 +48,9 @@ export default {
     test_json: `${App.configDir}/js/weather/test2.json`,
   },
   accuwearther: {
-    api_key: "",
-    city: "",
-    language: "",
+    api_key: "K4ZWXoux8DE5IjxA4RQ832RVVGVzaGYq",
+    city: "290898",
+    language: "ru-RU",
   },
   screen:{
     width: get_screen_resolution().width,

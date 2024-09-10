@@ -1,5 +1,8 @@
 import { GLib, Gio, GdkPixbuf, Utils, Gdk, Gtk, Variable } from "../import.js";
 
+export const capsLockState = Variable(0,{
+  poll: [1000, () => Utils.exec(`brightnessctl -d input4::capslock g`)],
+});
 export const time = Variable(GLib.DateTime.new_now_local(), {
   poll: [5000, () => GLib.DateTime.new_now_local()],
 });
@@ -340,4 +343,5 @@ export function checkTheme(name) {
     });
   return themeExists;  
 }
+
 

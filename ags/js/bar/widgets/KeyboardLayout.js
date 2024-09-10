@@ -1,17 +1,17 @@
-import { Widget, Hyprland } from "../../import.js";
-import icons from "../../util/icons.js";
+import { Hyprland } from "../../import.js";
 import keyboard from "../../services/keyboardService.js";
+import { capsLockState } from "../../util/My_util.js";
 
 export default () =>
   Widget.Button({
     class_name: "layoutBtn",
+    tooltip_text: capsLockState.bind().as((s) => s === '1' ? `Caps Lock ON` : ""),
     onClicked: () => {keyboard.layout="next"},
     child: Widget.Box({
       spacing:5,
       children:[
-        // Widget.Icon(icons.ui.keyboard),
          Widget.Label({
-          class_name: "layout",
+          class_name: capsLockState.bind().as((s) => s === '1' ? `layout cups` : "layout"),
           setup: (self) =>
             self.hook(Hyprland, () => {
               self.label = keyboard.getLayout();

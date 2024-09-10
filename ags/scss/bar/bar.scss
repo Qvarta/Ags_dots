@@ -21,7 +21,6 @@
       color:$background;
     }
   }
-
   .left {
     .weather {
       padding: 0 10px;
@@ -35,7 +34,6 @@
       }
     }
   }
-
   .center {
     button {
       transition: all 0.3s ease-out;
@@ -66,15 +64,18 @@
       }
     }
     .layoutBtn {
-      margin: 4px 1px;
+      margin: 5px 1px;
       padding: 0 5px;
       .layout {
-        // background-color: $hover1;
         color: $foreground;
         padding: 4px;
         font-size: 14px;
         font-weight: 600;
         border-radius: 4px;
+        &.cups{
+          color: $background;
+          background-color: $foreground;
+        }
       }
       &:hover {
         .layout {
