@@ -49,8 +49,8 @@ export default {
     weather:`${Utils.CACHE_DIR}/weather.json`,
   },
   accuwearther: {
-    api_key: "K4ZWXoux8DE5IjxA4RQ832RVVGVzaGYq",
-    city: "290898",
+    api_key: "",
+    city: "",
     language: "ru-RU",
   },
   screen:{
