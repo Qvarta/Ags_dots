@@ -3,6 +3,7 @@ import options from "../options.js";
 import { Widget } from "../import.js";
 import PopupWindow from "../util/PopupWindow.js";
 import icons from "../util/icons.js";
+
 const WINDOW_NAME = "launcher";
 
 const AppItem = (app) =>

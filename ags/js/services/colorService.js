@@ -1,7 +1,6 @@
 // @ts-nocheck
-
 import { Service, Utils } from "../import.js";
-import * as Utils2 from "../util/My_util.js";
+import {isInstalled, run_async, run} from "../util/helpers.js";
 
 const MAX_NUM_COLORS = 6;
 
@@ -17,10 +16,7 @@ class ColorPicker extends Service {
   }
 
   #colors = [];
-  set colors(colors) {
-    this.#colors = colors;
-    this.changed("#colors");
-  }
+
   get colors() {
     return this.#colors;
   }
@@ -32,13 +28,13 @@ class ColorPicker extends Service {
     super();
   }
   to_clipboard(color) {
-    if (!Utils2.checkProgramInstalled("wl-copy")) return;
-    Utils2.exec_async(`"wl-copy '${color}'"`);
+    if (!isInstalled("wl-copy")) return;
+    run_async(`"wl-copy '${color}'"`);
     Utils.notify({summary:color,body: `Color copied to clipboard`,iconName: "color-picker-symbolic"});
   }
   pick_color() {
-    if (!Utils2.checkProgramInstalled("hyprpicker")) return;
-    const color = Utils2.exec_sync('hyprpicker -a');
+    if (!isInstalled("hyprpicker")) return;
+    const color = run('hyprpicker -a');
     const list = this.colors;
     if (!list.includes(color)) {
       list.push(color);

@@ -1,6 +1,6 @@
 import { Hyprland } from "../../import.js";
 import keyboard from "../../services/keyboardService.js";
-import { capsLockState } from "../../util/My_util.js";
+import { capsLockState } from "../../util/helpers.js";
 
 export default () =>
   Widget.Button({

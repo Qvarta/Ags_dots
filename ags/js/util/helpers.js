@@ -1,6 +1,6 @@
 import { GLib, Gio, GdkPixbuf, Utils, Gdk, Gtk, Variable } from "../import.js";
 
-export const capsLockState = Variable(0,{
+export const capsLockState = Variable(0, {
   poll: [1000, () => Utils.exec(`brightnessctl -d input4::capslock g`)],
 });
 export const time = Variable(GLib.DateTime.new_now_local(), {
@@ -8,13 +8,9 @@ export const time = Variable(GLib.DateTime.new_now_local(), {
 });
 const divide = ([total, free]) => free / total;
 export const ramval = Variable(0, {
-  poll: [
-    2000,
-    "free",
-    (out) =>
-      Math.round(
-        divide(
-          out
+  poll: [2000,"free",
+    (out) => Math.round(
+      divide(out
             .split("\n")
             .find((line) => line.includes("Mem:"))
             .split(/\s+/)
@@ -24,13 +20,9 @@ export const ramval = Variable(0, {
   ],
 });
 export const cpuval = Variable(0, {
-  poll: [
-    2000,
-    "top -b -n 1",
+  poll: [2000,"top -b -n 1",
     (out) =>
-      Math.round(
-        divide([
-          100,
+      Math.round(divide([100,
           out
             .split("\n")
             .find((line) => line.includes("Cpu(s)"))
@@ -40,7 +32,7 @@ export const cpuval = Variable(0, {
       ).toString() + "%",
   ],
 });
-export const user ={
+export const user = {
   name: GLib.get_user_name(),
   data: GLib.get_user_data_dir(),
   config: GLib.get_user_config_dir(),
@@ -83,7 +75,7 @@ export function isNetwork(text) {
  * @param {string} programName - The name of the program to check.
  * @return {boolean} True if the program is installed, false otherwise.
  */
-export function checkProgramInstalled(programName) {
+export function isInstalled(programName) {
   const result = GLib.spawn_command_line_sync(`bash -c "which ${programName}"`);
   const decoder = new TextDecoder("utf-8");
   const output = decoder.decode(result[1]).trim();
@@ -103,7 +95,7 @@ export function checkProgramInstalled(programName) {
  * @param {string} programName - The name of the program to execute.
  * @return {void} This function does not return anything.
  */
-export function exec_async(programName) {
+export function run_async(programName) {
   GLib.spawn_command_line_async(`bash -c ${programName}`);
 }
 /**
@@ -113,7 +105,7 @@ export function exec_async(programName) {
  * @param {boolean} [needsQuotes=false] - Whether the program name needs to be enclosed in quotes.
  * @return {string} The output of the program.
  */
-export function exec_sync(programName, needsQuotes = false) {
+export function run(programName, needsQuotes = false) {
   const command = needsQuotes
     ? `bash -c "${programName}"`
     : `bash -c ${programName}`;
@@ -139,6 +131,16 @@ export function list_dir(path) {
   }
   dir.close();
   return list;
+}
+/**
+ * Checks if a file exists.
+ *
+ * @param {string} path - The path to the file to check.
+ * @return {boolean} True if the file exists, false otherwise.
+ */
+export function isFile(path) {
+  const file = Gio.File.new_for_path(path);
+  return file.query_exists(null);
 }
 /**
  * Creates a symbolic link to a file.
@@ -221,43 +223,39 @@ export function get_local_time(timestamp, format) {
   return GLib.DateTime.new_from_unix_local(timestamp).format(format);
 }
 /**
- * Retrieves a list of available software updates.
+ * Retrieves a list of all available updates for the system.
  *
- * @return {Promise<string>} A promise that resolves with a JSON string containing an array of objects, each representing a package with its name, architecture, version, and repository.
+ * @return {Promise<string>} A promise that resolves with a JSON string containing an array of objects with package information.
+ * The objects contain the following properties:
+ * - `name`: The name of the package.
+ * - `version`: The version of the package.
+ * - `repository`: The repository that the package is from.
  */
-export function get_updates() {
+export async function get_updates() {
   return new Promise((resolve, reject) => {
-    const [success, stdout, stderr, exitStatus] = GLib.spawn_command_line_sync(
-      `bash -c "dnf -q check-update"`
-    );
-    const decoder = new TextDecoder("utf-8");
+    Utils.execAsync(['bash', '-c', "dnf -q list --updates"])
+      .then((output) => {
+        const lines = output.trim().split("\n").slice(1);
+        const packages = [];
+        lines.forEach((line) => {
+          const parts = line.split(/\s+/);
+          const packageName = parts[0];
+          const packageVersion = parts[1];
+          const packageRepository = parts[2];
 
-    if (success) {
-      const output = decoder.decode(stdout);
-      const lines = output.trim().split("\n");
-      const packages = [];
-
-      lines.forEach((line) => {
-        const parts = line.trim().split(/\s+/);
-        const packageName = parts[0].split(".")[0];
-        const packageArch = parts[0].split(".")[1];
-        const packageVersion = parts[1];
-        const packageRepository = parts[2];
-
-        if (packageName !== "") {
-          packages.push({
-            name: packageName,
-            arch: packageArch,
-            version: packageVersion,
-            repository: packageRepository,
-          });
-        }
+          if (packageName !== "") {
+            packages.push({
+              name: packageName,
+              version: packageVersion,
+              repository: packageRepository,
+            });
+          }
+        });
+        resolve(JSON.stringify(packages, null, 2));
+      })
+      .catch((err) => {
+        reject(err);
       });
-
-      resolve(JSON.stringify(packages, null, 2));
-    } else {
-      reject(decoder.decode(stderr));
-    }
   });
 }
 /**
@@ -265,42 +263,41 @@ export function get_updates() {
  *
  * @param {string} package_name - The name of the package to retrieve information about.
  * @return {Promise<string>} A promise that resolves with a JSON string containing an object with package information.
+ * The object contains the following properties:
+ * - `name`: The name of the package.
+ * - `version`: The version of the package.
+ * - `size`: The size of the package.
+ * - `description`: A short description of the package.
  */
-export function get_package_info(package_name) {
+export async function get_package_info(package_name) {
   return new Promise((resolve, reject) => {
-    const [success, stdout, stderr, exitStatus] = GLib.spawn_command_line_sync(
-      `bash -c "dnf -q info --upgrades ${package_name}"`
-    );
-    const decoder = new TextDecoder("utf-8");
+    Utils.execAsync(['bash', '-c', `dnf -q info --upgrades ${package_name}`])
+      .then((output) => {
+        const packages = output.split(/\n\n/)[0];
 
-    if (success) {
-      const text = decoder.decode(stdout);
-
-      const packages = text.split(/\n\n/)[0];
-
-      const lines = packages.split("\n").slice(1);
-
-      const package_name = lines[0].split(": ")[1];
-      const version = lines[1].split(": ")[1];
-      const size = lines[4].split(": ")[1];
-      let descr = lines[10].split(": ")[1];
-      for (let i = 11; i < lines.length; i++) {
-        descr += lines[i].trim() + " ";
-      }
-
-      descr = descr.replace(/[\n\t:]/g, "").trim();
-
-      const result = {
-        name: package_name,
-        version: version,
-        size: size,
-        description: descr,
-      };
-
-      resolve(JSON.stringify(result, null, 2));
-    } else {
-      reject(decoder.decode(stderr));
-    }
+        const lines = packages.split("\n").slice(1);
+  
+        const package_name = lines[0].split(": ")[1];
+        const version = lines[1].split(": ")[1];
+        const size = lines[4].split(": ")[1];
+        let descr = lines[10].split(": ")[1];
+        for (let i = 11; i < lines.length; i++) {
+          descr += lines[i].trim() + " ";
+        }
+  
+        descr = descr.replace(/[\n\t:]/g, "").trim();
+  
+        const result = {
+          name: package_name,
+          version: version,
+          size: size,
+          description: descr,
+        };
+        resolve(JSON.stringify(result, null, 2));
+      })
+      .catch((err) => {
+        reject(err);
+      });
   });
 }
 /**

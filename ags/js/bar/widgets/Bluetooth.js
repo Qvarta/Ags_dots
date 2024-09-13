@@ -1,5 +1,5 @@
 import icons from '../../util/icons.js';
-import { Widget, Bluetooth } from '../../import.js';
+import {Bluetooth } from '../../import.js';
 
 export default () =>
     Widget.Icon({

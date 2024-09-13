@@ -1,7 +1,7 @@
 import { Widget, Mpris } from "../import.js";
 import { DayForecast } from "../weather/weatherWidget.js";
-import { time } from "../util/My_util.js";
-import { getTimezone, cpuval, ramval } from "../util/My_util.js";
+import { time } from "../util/helpers.js";
+import { getTimezone, cpuval, ramval } from "../util/helpers.js";
 import options from "../options.js";
 
 const WINDOW_NAME = "desktop";
@@ -12,12 +12,19 @@ const NowPlaying = (player) =>
     class_name: "nowPlaying",
     hexpand: true,
     vertical: true,
+    setup: (self) => {
+     console.log(player.bind().as((res) => {return res}))
+    },
     spacing: 5,
     children: [
       Widget.Box({
         spacing: 10,
+        visible: player.bind("track_artists").as((a) => a[0].length > 0),
         children: [
-          Widget.Icon({icon: "avatar-default-symbolic",class_name: "player_icon"}),
+          Widget.Icon({
+            icon: "avatar-default-symbolic",
+            class_name: "player_icon",
+          }),
           Widget.Label({
             hpack: "start",
             class_name: "artist",

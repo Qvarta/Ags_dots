@@ -32,6 +32,7 @@ const Player = (player) => {
   });
 
   const artist = Widget.Label({
+    visible: player.bind("track_artists").as((a) => a[0].length > 0),
     class_name: "artist",
     max_width_chars: 30,
     truncate: "end",

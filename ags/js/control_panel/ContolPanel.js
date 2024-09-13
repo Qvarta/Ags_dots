@@ -1,5 +1,4 @@
-import { Widget, Mpris, Variable } from "../import.js";
-import icons from "../util/icons.js";
+import { Mpris } from "../import.js";
 import options from "../options.js";
 import PopupWindow from "../util/PopupWindow.js";
 import { Menu2, Row } from "../util/ToggleButton.js";

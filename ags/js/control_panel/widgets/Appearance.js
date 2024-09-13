@@ -2,7 +2,7 @@
 import { css, scss } from "../../main.js";
 import options from "../../options.js";
 import Themes from "../../services/appearanceService.js";
-import { checkTheme } from "../../util/My_util.js";
+import { checkTheme } from "../../util/helpers.js";
 
 const theme = Variable();
 const global = Variable(false);

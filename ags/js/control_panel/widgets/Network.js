@@ -2,7 +2,7 @@ import { Menu2, ArrowToggleButton } from "../../util/ToggleButton.js";
 import PopupWindow from "../../util/PopupWindow.js";
 import icons from "../../util/icons.js";
 import { Widget, Utils, Variable } from "../../import.js";
-import { checkProgramInstalled } from "../../util/My_util.js";
+import { isInstalled } from "../../util/helpers.js";
 
 const { wifi } = await Service.import("network");
 const WINDOW_NAME = "promt";
@@ -80,7 +80,7 @@ const promtEntry = () =>
         text: password.bind(),
         setup: (self) =>
           self.on("map", (self) => {
-            if (checkProgramInstalled("nmcli")) {
+            if (isInstalled("nmcli")) {
               const device = Utils.exec(`bash -c "nmcli -t -f DEVICE device | head -n 1"`);
               Utils.exec(`nmcli device disconnect ${device}`);
             }
@@ -88,7 +88,7 @@ const promtEntry = () =>
             self.text = "";
           }),
         onAccept: ({ text }) => {
-          if (checkProgramInstalled("nmcli")) {
+          if (isInstalled("nmcli")) {
             Utils.exec(`nmcli device wifi connect ${ssid.value} password ${text}`);
             setTimeout(() => {
               if (wifi.ssid === ssid.value) {

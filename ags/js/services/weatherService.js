@@ -1,6 +1,6 @@
 import { Utils, Service } from "../import.js";
 import options from "../options.js";
-import { isNetwork, checkProgramInstalled } from "../util/My_util.js";
+import { isNetwork, isInstalled, isFile } from "../util/helpers.js";
 class WeatherService extends Service {
   static {
     Service.register(
@@ -35,40 +35,23 @@ class WeatherService extends Service {
   constructor() {
     super();
     Utils.timeout(2000, () => {
-      Utils.interval(3600000, this._getWeather.bind(this)); //uncomment this line to use accuweather.com
-      // this._testWeather(); //comment this line to use accuweather.com
+      // Utils.interval(3600000, this._getWeather.bind(this));
+      this._fileWeather();
     });
   }
-  /* Not working */
-  // _getWeather() {
-  //   const api_key = options.accuwearther.api_key;
-  //   const city = options.accuwearther.city;
-  //   const language = options.accuwearther.language;
-  //   this._url = `http://dataservice.accuweather.com/forecasts/v1/daily/5day/${city}?apikey=${api_key}&language=${language}&details=true&metric=true`;
-  //   Utils.timeout(4000, () => {
-  //     if (!isNetwork("weather data")) return;
-  //     // Utils.readFileAsync(options.paths.test_json)
-  //     Utils.fetch(this._url)
-  //       .then((result) => {
-  //         const weather_json = JSON.parse(result);
-  //         this.updateProperty("weather_data", weather_json);
-  //         const hours = new Date().getHours().toString().padStart(2, "0");
-  //         const minutes = new Date().getMinutes().toString().padStart(2, "0");
-  //         this.updateProperty("update", `${hours}:${minutes}`);
-  //         this.updateProperty("status", true)
-  //       })
-  //       .catch((error) => console.log(error));
-  //   });
-  // }
   _getWeather() {
-    if (!checkProgramInstalled("curl")) return;
+    if (!isInstalled("curl")) return;
+    if (!isNetwork("weather data")) {
+      this._fileWeather();
+      return;
+    };
     const api_key = options.accuwearther.api_key;
     const city = options.accuwearther.city;
     const language = options.accuwearther.language;
     const command = `curl -s 'http://dataservice.accuweather.com/forecasts/v1/daily/5day/${city}?apikey=${api_key}&language=${language}&details=true&metric=true'`;
 
-    if (!isNetwork("weather data")) return;
     Utils.execAsync(["bash", "-c", `${command}`]).then((result) => {
+      Utils.writeFile(result, options.paths.weather).catch(err => print(err))
       const weather_json = JSON.parse(result);
       this.updateProperty("weather_data", weather_json);
       const hours = new Date().getHours().toString().padStart(2, "0");
@@ -77,13 +60,14 @@ class WeatherService extends Service {
       this.updateProperty("status", true);
     });
   }
-  _testWeather() {
+  _fileWeather() {
+    const jsonPath = isFile(options.paths.weather) ? options.paths.weather : options.paths.test_json;
     Utils.notify({
-      summary: "Used test JSON",
-      body: `For use accuweather.com uncomment the line in weatherService.js. Change city, language and api_key in options.js`,
-      iconName: "dialog-information-symbolic",
+      summary: "Error receiving weather data",
+      body: `Used old weather data from ${jsonPath}`,
+      iconName: "gis-weather-symbolic",
     }).catch((error) => {console.error(error)});
-    Utils.readFileAsync(options.paths.test_json).then((result) => {
+    Utils.readFileAsync(jsonPath).then((result) => {
       const weather_json = JSON.parse(result);
       this.updateProperty("weather_data", weather_json);
       const hours = new Date().getHours().toString().padStart(2, "0");

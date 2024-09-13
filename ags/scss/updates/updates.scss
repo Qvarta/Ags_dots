@@ -68,4 +68,14 @@
       padding: 10px;
     }
   }
+
+  .spinner {
+    background-color: $background;
+    box-shadow: $box_shadow;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    min-width: 40px;
+    min-height: 40px;
+  }
 }

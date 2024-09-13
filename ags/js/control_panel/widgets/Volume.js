@@ -1,7 +1,7 @@
 import { Arrow } from "../../util/ToggleButton.js";
 import icons from "../../util/icons.js";
 import { Widget, Audio } from "../../import.js";
-import {checkProgramInstalled} from "../../util/My_util.js";
+import {isInstalled} from "../../util/helpers.js";
 
 const VolumeIndicator = (type = "speaker") =>
   Widget.Button({
@@ -9,7 +9,7 @@ const VolumeIndicator = (type = "speaker") =>
     vpack: "center",
     on_primary_click: () => (Audio[type].is_muted = !Audio[type].is_muted),
     on_secondary_click: () => {
-      if(!checkProgramInstalled("pavucontrol")) {
+      if(!isInstalled("pavucontrol")) {
         return;
       } else {
         App.toggleWindow("control_panel");

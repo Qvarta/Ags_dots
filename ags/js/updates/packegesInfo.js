@@ -1,38 +1,51 @@
 import { Widget } from "../import.js";
 import PopupWindow from "../util/PopupWindow.js";
-import { p_name, p_size, p_description } from "./updatesWidget.js";
+import updates from "../services/updateService.js";
+
 const WINDOW_NAME = "info";
 const packagesInfo = () =>
   Widget.Button({
     class_name: "info",
-    on_clicked: () => App.closeWindow(WINDOW_NAME),
+    on_clicked: () => {
+      updates.reset = "";
+      App.closeWindow(WINDOW_NAME);
+    },
     child: Widget.Box({
-      class_name: "info_box",
-      vertical: true,
       children: [
-        Widget.Label({
-          class_name: "title",
-          label: p_name.bind(),
-        }),
         Widget.Box({
+          class_name: "info_box",
+          visible: updates.bind("description").as((d) => d.length > 0),
+          vertical: true,
           children: [
             Widget.Label({
-              hexpand: true,
-              class_name:"description",
-              label: p_description.bind(),
-              justification: 'left',
-              xalign: 0,
-              maxWidthChars: 35,
-              wrap: true,
+              class_name: "title",
+              label: updates.bind("name"),
             }),
-            Widget.Label({
-              class_name: "size",
-              label: p_size.bind(),
+            Widget.Box({
+              children: [
+                Widget.Label({
+                  hexpand: true,
+                  class_name: "description",
+                  label: updates.bind("description"),
+                  justification: "left",
+                  xalign: 0,
+                  maxWidthChars: 35,
+                  wrap: true,
+                }),
+                Widget.Label({
+                  class_name: "size",
+                  label: updates.bind("size"),
+                }),
+              ],
             }),
           ],
+        }),
+        Widget.Icon({
+          class_name: "spinner",
+          icon: "nm-stage01-connecting01-symbolic",
+          visible: updates.bind("description").as((d) => d.length === 0),
+          size: 40
         })
-
-
       ],
     }),
   });
@@ -48,4 +61,3 @@ export default () =>
       self.keybind("Escape", () => App.closeWindow(WINDOW_NAME));
     },
   });
-

@@ -1,5 +1,5 @@
 import icons from "../util/icons.js"
-import {get_local_time} from "../util/My_util.js"
+import {get_local_time} from "../util/helpers.js"
 
 
 const NotificationIcon = ({ app_entry, app_icon, image }) => {
@@ -113,16 +113,6 @@ export default (notification) => {
   const eventbox = Widget.EventBox({
     vexpand: false,
     on_primary_click: notification.dismiss,
-    // on_hover() {
-    //   if (actionsbox)
-    //     actionsbox.reveal_child = true
-    // },
-    // on_hover_lost() {
-    //   if (actionsbox)
-    //     actionsbox.reveal_child = true
-
-    //   notification.dismiss()
-    // },
     child: Widget.Box({
       vertical: true,
       children: actionsbox ? [content, actionsbox] : [content],

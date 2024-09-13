@@ -1,5 +1,6 @@
 import { Variable } from "../../import.js";
 import colorpicker from "../../services/colorService.js"
+
 const cols = Variable([]);
 
 const css = (color) => `

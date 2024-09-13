@@ -1,4 +1,4 @@
-import { Battery, Widget } from "../../import.js";
+import { Battery} from "../../import.js";
 
   const BatteryPercent = () =>
     Widget.Icon().hook(

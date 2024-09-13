@@ -1,4 +1,4 @@
-import { time } from "../../util/My_util.js";
+import { time } from "../../util/helpers.js";
 const ClockLabel = ({ format = "%H:%M", ...props } = {}) =>
   Widget.Label({
     className: "clock",
