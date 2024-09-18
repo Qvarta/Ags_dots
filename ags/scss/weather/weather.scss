@@ -17,11 +17,72 @@
 
       .weatherBtn {
         &:hover {
-          background-color: $background2;
-          box-shadow: $box_shadow;
+          background-color: $background4;
           border-radius: 10px;
         }
       }
+    }
+  }
+}
+.weatherOptionsForm {
+  margin: 5px;
+  padding: 10px;
+  border-radius: 10px;
+  color: $foreground;
+  background-color: $background;
+  box-shadow: $box_shadow;
+  .weatherOptions {
+    background-color: $background2;
+    box-shadow: 2px 2px 2px 0 #0e0e0e;
+    padding: 10px;
+    border-radius: 10px;
+    label {
+      min-width: 60px;
+    }
+    entry {
+      min-width: 250px;
+      background-color: $background6;
+      color: $foreground;
+      border-radius: 8px;
+      padding: 5px;
+      image {
+        margin: 0 10px;
+      }
+    }
+  }
+  .saveBtn {
+    background-color: $background5;
+    box-shadow: 2px 2px 2px 0 #0e0e0e;
+    min-width: 100px;
+    border-radius: 8px;
+    padding: 5px;
+    label {
+      margin: 0;
+    }
+    &:hover {
+      background-color: $background4;
+    }
+  }
+  .scrollable {
+    padding: 10px;
+    border-radius: 10px;
+    background-color: $background2;
+    box-shadow: 2px 2px 2px 0 #0e0e0e;
+    min-height: 200px;
+    button {
+      padding: 5px;
+      margin: 5px;
+      border-radius: 10px;
+      &:hover {
+        background-color: $background4;
+      }
+    }
+    label {
+      font-size: 12px;
+    }
+    .cityName {
+      font-size: 16px;
+      font-weight: bold;
     }
   }
 }

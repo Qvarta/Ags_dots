@@ -4,16 +4,7 @@ export default {
   powermenu: {
     shutdown: "systemctl poweroff",
     reboot: "systemctl reboot",
-    suspend: `
-    playerctl -a pause & 
-    ags -q
-    swaylock -f -c "#141319"
-    pid=$(pgrep swaylock)
-    systemctl suspend
-    waitpid $pid
-    hyprctl dispatch exec ags`,
-    lock: `
-    playerctl -a pause
+    lock: `playerctl -a pause
     swaylock -f -c "#141319"`,
     logout: "hyprctl dispatch exit",
   },
@@ -21,11 +12,17 @@ export default {
     duration: 300,
   },
   themes: {
-    dark: "Dark",
-    light: "Light",
-    set_theme: `gsettings set org.gnome.desktop.interface gtk-theme "Tokyonight-`,
-    set_icons: `gsettings set org.gnome.desktop.interface icon-theme "Tokyonight-`,
+    vscode_dark: "Tokyo Night",
+    vscode_light: "Tokyo Night Light",
+    gtk_dark: "Tokyonight-Dark",
+    gtk_light: "Tokyonight-Light",
+    icon_light: "Tokyonight-Light",
+    icon_dark: "Tokyonight-Dark",
+    set_theme: `gsettings set org.gnome.desktop.interface gtk-theme`,
+    set_icons: `gsettings set org.gnome.desktop.interface icon-theme`,
     get_theme: "gsettings get org.gnome.desktop.interface gtk-theme",
+    pref_dark: "gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'",
+    pref_light: "gsettings set org.gnome.desktop.interface color-scheme 'prefer-light'",
   },
   screenshot: {
     desktop: "hyprshot -m output -o",
@@ -45,13 +42,8 @@ export default {
     hyprland: `${user.config}/hypr/vars/theme.conf`,
     kitty: `${user.config}/kitty`,
     weather_icons: `${App.configDir}/icons`,
-    test_json: `${App.configDir}/js/weather/test2.json`,
-    weather:`${Utils.CACHE_DIR}/weather.json`,
-  },
-  accuwearther: {
-    api_key: "",
-    city: "",
-    language: "ru-RU",
+    weather: `${Utils.CACHE_DIR}/weather/`,
+    request: `${Utils.CACHE_DIR}/weather/`,
   },
   screen:{
     width: get_screen_resolution().width,

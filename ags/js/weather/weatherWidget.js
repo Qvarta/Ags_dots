@@ -1,18 +1,28 @@
 import { Widget, Variable } from "../import.js";
-import Weather from "../services/weatherService.js";
+import weather from "../services/weatherService.js";
 import options from "../options.js";
 
 export const dayNumber = Variable("Day0");
 
 const updateTime = () =>
-  Widget.Label({
-    class_name: "update",
-    hpack: "start",
-    label: Weather.bind("update").transform((result) => `󰚰  ${result}`),
+  Widget.Box({
+    hpack: "end",
+    spacing: 15,
+    children:[
+      Widget.Label({
+        class_name: "update",
+        label: weather.bind('city'),
+      }),
+      Widget.Label({
+        class_name: "update",
+        hpack: "start",
+        label: weather.bind("update").transform((result) => `󰚰  ${result}`),
+      })
+    ]
   });
 const short_date = (number) =>
   Widget.Label({
-    label: Weather.bind("weather_data")
+    label: weather.bind("weather_data")
       .transform((data) => data?.DailyForecasts?.[number]?.Date)
       .transform((date) =>
         new Date(date).toLocaleDateString("ru-RU", { weekday: "short" })
@@ -22,7 +32,7 @@ const long_date = (number) =>
   Widget.Label({
     class_name: "long_date yellow",
     hpack: "start",
-    label: Weather.bind("weather_data")
+    label: weather.bind("weather_data")
       .transform((data) => data?.DailyForecasts?.[number]?.Date)
       .transform((date) => new Date(date).toLocaleDateString("ru-RU", { weekday: "long" }))
       .transform((date) => date ===  new Date().toLocaleDateString("ru-RU", { weekday: "long" }) ? "СЕГОДНЯ:" : `${date.toUpperCase()}:`),
@@ -30,9 +40,8 @@ const long_date = (number) =>
 const description = (number, daytime) =>
   Widget.Label({
     class_name: "description",
-    // hexpand: true,
     hpack: "start",
-    label: Weather.bind("weather_data").transform(
+    label: weather.bind("weather_data").transform(
       (data) => `${data?.DailyForecasts?.[number]?.[daytime]?.IconPhrase}`
     ),
   });
@@ -41,7 +50,7 @@ const icon = (number, daytime, iconsize) =>
     hexpand: true,
     vpack: "center",
     hpack: "center",
-    css: Weather.bind("weather_data")
+    css: weather.bind("weather_data")
       .transform((data) => data?.DailyForecasts?.[number]?.[daytime]?.Icon)
       .transform((icon) => `${options.paths.weather_icons}/${icon}.png`)
       .transform(
@@ -55,18 +64,9 @@ const icon = (number, daytime, iconsize) =>
         `
       ),
   });
-// const tempNow = (number) =>
-//   Widget.Label({
-//     hpack: "end",
-//     class_name: "tempNow",
-//     label: Weather.bind("weather_data")
-//       .transform(
-//         (data) => `${data?.DailyForecasts?.[number]?.Temperature?.Maximum?.Value.toFixed(0)}°`
-//       )
-//   });
 const tempMax = (number) =>
   Widget.Label({
-    label: Weather.bind("weather_data").transform(
+    label: weather.bind("weather_data").transform(
       (data) =>
         `${data?.DailyForecasts?.[number]?.Temperature?.Maximum?.Value.toFixed(
           0
@@ -77,7 +77,7 @@ const feelsLike = (number) =>
   Widget.Label({
     class_name: "description small",
     hpack: "start",
-    label: Weather.bind("weather_data").transform(
+    label: weather.bind("weather_data").transform(
       (data) =>
         `Ощущается как ${data?.DailyForecasts?.[
           number
@@ -87,7 +87,7 @@ const feelsLike = (number) =>
 const precip = (number, daytime) =>
   Widget.Label({
     hpack: "start",
-    label: Weather.bind("weather_data")
+    label: weather.bind("weather_data")
       .transform(
         (data) =>
           data?.DailyForecasts?.[number]?.[daytime]?.PrecipitationProbability
@@ -96,7 +96,7 @@ const precip = (number, daytime) =>
   });
 const windSpeed = (number, daytime) =>
   Widget.Label({
-    label: Weather.bind("weather_data")
+    label: weather.bind("weather_data")
       .transform(
         (data) => data?.DailyForecasts?.[number]?.[daytime]?.Wind?.Speed?.Value
       )
@@ -106,52 +106,14 @@ const windSpeed = (number, daytime) =>
   });
 const windDirection = (number, daytime) =>
   Widget.Label({
-    label: Weather.bind("weather_data")
+    label: weather.bind("weather_data")
       .transform(
         (data) =>
           data?.DailyForecasts?.[number]?.[daytime]?.Wind?.Direction?.Localized
       )
       .transform((dir) => `󱗺 (${dir})`),
   });
-const currentDay_OLD = (number, daytime) =>
-  Widget.Box({
-    class_name: "up",
-    tooltip_text: Weather.bind("weather_data").transform(
-      (data) => ` ${data?.DailyForecasts?.[number]?.[daytime]?.IconPhrase}`
-    ),
-    child: Widget.Box({
-      class_name: "up_container",
-      children: [
-        Widget.Box({
-          class_name: "overlay",
-          vpack: "start",
-          vertical: true,
-          spacing: 5,
-          children: [icon(number, daytime, 70), updateTime()],
-        }),
-        Widget.Box({
-          class_name: "weatherInfo",
-          vertical: true,
-          vpack: "center",
-          hexpand: true,
-          // hpack: "start",
-          children: [
-            description(number, daytime),
-            feelsLike(number),
-            precip(number, daytime),
-            Widget.Box({
-              hpack: "center",
-              spacing: 8,
-              children: [
-                windSpeed(number, daytime),
-                windDirection(number, daytime),
-              ],
-            }),
-          ],
-        }),
-      ],
-    }),
-  });
+
 const forecastDay = (number, daytime) =>
   Widget.Button({
     class_name: "weatherBtn",
@@ -177,26 +139,6 @@ const Week = () =>
       Widget.Box({
         hexpand: true,
         children: Array.from({ length: 5 }, (_, i) => forecastDay(i, "Day")),
-      }),
-    ],
-  });
-const Title = () =>
-  Widget.Box({
-    vexpand: true,
-    vpack: "center",
-    vertical: true,
-    spacing: 20,
-    children: [
-      Widget.Icon({
-        icon: `${path_to_svg}/accuweather.ico`,
-        size: 25,
-      }),
-      Widget.Label({
-        class_name: "title_label",
-        angle: 270,
-        label: Weather.bind("weather_data").transform(
-          (data) => `${data?.DailyForecasts?.[0]?.Sources?.[0]}`
-        ),
       }),
     ],
   });
@@ -237,7 +179,7 @@ export const WeekForecast = () =>
 
 export const DayForecast = () =>
   Widget.Stack({
-    visible: Weather.bind("status"),
+    visible: weather.bind("status"),
     children: {
       Day0: currentDay(0, "Day"),
       Day1: currentDay(1, "Day"),

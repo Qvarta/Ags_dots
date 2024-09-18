@@ -42,7 +42,7 @@ const packagesInfo = () =>
         }),
         Widget.Icon({
           class_name: "spinner",
-          icon: "nm-stage01-connecting01-symbolic",
+          icon: "hourglass-symbolic",
           visible: updates.bind("description").as((d) => d.length === 0),
           size: 40
         })

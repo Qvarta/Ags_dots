@@ -5,8 +5,8 @@
     box-shadow: $box_shadow;
     background-color: $background;
     border-radius: 10px;
-    .launcherEntry {
-      background-color: $background2;
+    entry {
+      background-color: $background6;
       border-radius: 20px;
       margin: 10px 20px;
       padding: 5px;
@@ -40,8 +40,8 @@
       }
       &:hover,
       &:focus {
-        background-color: $background2;
-        box-shadow: $box_shadow;
+        color: $background2;
+        background-color: $background4;
       }
     }
   }

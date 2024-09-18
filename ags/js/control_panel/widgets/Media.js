@@ -4,6 +4,7 @@ import icons from "../../util/icons.js";
 const players = Mpris.bind("players");
 
 function lengthStr(length) {
+  if (length >10000) return "-- : --";
   const min = Math.floor(length / 60);
   const sec = Math.floor(length % 60);
   const sec0 = sec < 10 ? "0" : "";
@@ -72,10 +73,6 @@ const Player = (player) => {
   const lengthLabel = Widget.Label({
     class_name: "length",
     hpack: "end",
-    truncate: 'end',
-    maxWidthChars: 5,
-    wrap: true,
-    visible: player.bind("length").as((l) => l > 0),
     label: player.bind("length").as(lengthStr),
   });
 

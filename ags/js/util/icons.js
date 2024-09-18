@@ -20,7 +20,6 @@ export default {
   },
   ui: {
     password: "auth-fingerprint-symbolic",
-    home: "󱁍",
     keyboard: "input-keyboard-symbolic",
     close: "window-close-symbolic",
     colorpicker: "color-select-symbolic",

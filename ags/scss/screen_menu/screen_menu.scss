@@ -9,10 +9,10 @@
         border-color: $background2;
         box-shadow: $box_shadow;
         &:hover{
-            background-color: $hover1;
+            background-color: $background4;
         }
         &:focus{
-            background-color: $hover1;
+            background-color: $background4;
         }
         .icon{
             color: $foreground;

@@ -9,15 +9,23 @@ class Appearance extends Service {
       this,
       {},
       {
-        listWallpapers: ["jsobject", "rw"],
+        wallpapers: ["jsobject", "rw"],
       }
     );
   }
 
   _walldir = options.paths.wallpapers;
   _cashdir = options.paths.thumbnails;
-  _listWallpapers = [];
+  wallpapers = [];
 
+  set gtk_theme([gtk_theme, icon_theme, colorsheme]) {
+    if (!isInstalled("gsettings")) return;
+    print(`${options.themes.set_theme} "${gtk_theme}"`);
+    Utils.execAsync(["sh", "-c", `${options.themes.set_theme} "${gtk_theme}"`]);
+    colorsheme === "Dark" ? Utils.execAsync(["sh", "-c", `${options.themes.pref_dark}`]) : Utils.execAsync(["sh", "-c", `${options.themes.pref_light}`]);
+    Utils.execAsync(["sh", "-c", `${options.themes.set_icons} "${icon_theme}"`]);
+    symlink(`${options.paths.micro}/themes/${colorsheme}.json`, `${options.paths.micro}/settings.json`);
+  }
   set vscode(theme) {
     if (!isInstalled("codium")) return;
     const content = JSON.parse(Utils.readFile(options.paths.vscode));
@@ -36,27 +44,21 @@ class Appearance extends Service {
     if (!isInstalled("swww")) return;
     Utils.execAsync(["sh","-c",`swww img ${options.paths.wallpapers}/${path}`,]);
   }
-  // Not woking whithout restart Hyprland !!!!!
-  set hyprland(theme) {
-    Utils.execAsync(["sh", "-c", `${options.themes.set_icons}${theme}"`]);
-    Utils.writeFile(`$theme = GTK_THEME,Tokyonight-${theme}`,options.paths.hyprland);
-    symlink(`${options.paths.gtk3}/themes/${theme}.ini`, `${options.paths.gtk3}/settings.ini`);
-    symlink(`${options.paths.micro}/themes/${theme}.json`, `${options.paths.micro}/settings.json`);
-  }
-  get listWallpapers() {
-    return this._listWallpapers;
+  get wallpapers() {
+    // console.log (this._listWallpapers);
+    return this.wallpapers;
   }
   constructor() {
     super();
     Utils.ensureDirectory(this._cashdir);
     if(is_empty(this._cashdir)) this._cash_wallpapers();
-    this._listWallpapers = list_dir(this._walldir);
+    this.wallpapers = list_dir(this._walldir);
     Utils.monitorFile(this._walldir, () => this._cash_wallpapers());
   }
   _cash_wallpapers() {
     const new_list = list_dir(this._walldir);
-    const for_cash = new_list.filter((item) => !this._listWallpapers.includes(item));
-    const for_del = this._listWallpapers.filter((item) => !new_list.includes(item));
+    const for_cash = new_list.filter((item) => !this.wallpapers.includes(item));
+    const for_del = this.wallpapers.filter((item) => !new_list.includes(item));
     for_del.forEach((item) => {
       del_file(this._cashdir, item);
       console.log(`Удалено ${this._cashdir}${item}`);
@@ -65,7 +67,7 @@ class Appearance extends Service {
       cash_image(this._walldir, item, this._cashdir, 150, 100);
       console.log(`Кэшировано ${this._cashdir}${item}`);
     });
-    this.updateProperty("listWallpapers", new_list);
+    this.updateProperty("wallpapers", new_list);
   }
 }
 

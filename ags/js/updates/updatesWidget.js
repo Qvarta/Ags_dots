@@ -74,9 +74,7 @@ export const UpdatesWidget = () =>
     hscroll: "never",
     child: Widget.Box({
       vertical: true,
-      children: updates
-        .bind("updates")
-        .as((jsonData) => jsonData.map((update) => updateItem(update))),
+      children: updates.bind("updates").as((jsonData) => jsonData.map((update) => updateItem(update))),
     }),
   });
 

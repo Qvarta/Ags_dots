@@ -7,6 +7,6 @@ export default () =>
     on_secondary_click: () => App.toggleWindow("updates"),
     cursor: "pointer",
     tooltip_text: Updates.bind("updates").transform((updates) => updates.length + " updates available"),
-    child: Widget.Icon({ icon: "yum-indicator-updates-symbolic" }),
+    child: Widget.Icon({ icon: "software-update-urgent-symbolic" }),
   });
 

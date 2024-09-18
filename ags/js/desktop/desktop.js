@@ -13,7 +13,7 @@ const NowPlaying = (player) =>
     hexpand: true,
     vertical: true,
     setup: (self) => {
-     console.log(player.bind().as((res) => {return res}))
+    //  console.log(player.bind().as((res) => {return res}))
     },
     spacing: 5,
     children: [

@@ -8,7 +8,7 @@ import { NetworkToggle, WifiSelection } from "./widgets/Network.js";
 import { BluetoothToggle, BluetoothDevices } from "./widgets/Bluetooth.js";
 import { Media } from "./widgets/Media.js";
 import {NotificationColumn} from "./widgets/NotificationColumn.js";
-import {setGlobal, WallpaperToggle, ThemeToggle} from "./widgets/Appearance.js";
+import {WallpaperToggle, ThemeToggle} from "./widgets/Appearance.js";
 import { colorPicker } from "./widgets/Color_picker.js";
 
 
@@ -49,7 +49,6 @@ const Panel = () =>
         class_name: "appearance",
         children:[
           Row([WallpaperToggle, ThemeToggle]),
-          setGlobal(),
           colorPicker(),
         ]
       }),

@@ -61,8 +61,8 @@ export function isNetwork(text) {
   const networkMonitor = Gio.NetworkMonitor.get_default();
   if (!networkMonitor.network_available) {
     Utils.notify(
-      `Error receiving ${text}`,
       "Network is not available",
+      `Error receiving ${text}`,
       "network-wireless-offline-symbolic"
     );
     return false;

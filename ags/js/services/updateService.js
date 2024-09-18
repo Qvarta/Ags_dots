@@ -28,14 +28,9 @@ class CheckUpadesService extends Service {
   set info (package_name) {
     get_package_info(package_name).then((result) => {
       const { name, size, description } = JSON.parse(result);
-      this._name = name;
-      this._size = size;
-      this._description = description;
-
-      this.changed("name");
-      this.changed("size");
-      this.changed("description");
-
+      this.updateProperty("name", name);
+      this.updateProperty("size", size);
+      this.updateProperty("description", description);
     }).catch(console.error);
   }
   get updates() {
@@ -60,6 +55,7 @@ class CheckUpadesService extends Service {
       get_updates().then((json) => {
         this._updates = JSON.parse(json);
         this.changed("updates");
+        // console.log(this._updates);
       }).catch((error) => {console.error(error)});
     })
   }

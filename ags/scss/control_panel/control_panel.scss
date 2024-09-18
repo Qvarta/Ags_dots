@@ -25,7 +25,7 @@
         box-shadow: none;
 
         &:hover {
-          background-color: $hover1;
+          background-color: $background4;
           // color: darken($foreground, 10%);
         }
 
@@ -98,8 +98,7 @@
       .arrow {
         border-radius: 5px;
         &:hover {
-          // box-shadow: $box_shadow;
-          background-color: $hover1;
+          background-color: $background4;
         }
       }
     }
@@ -118,7 +117,7 @@
         background-color: transparent;
 
         &:hover {
-          background-color: $hover1;
+          background-color: $background4;
         }
         image {
           font-size: 20px;
@@ -164,8 +163,7 @@
       background-color: transparent;
 
       &:hover {
-        // box-shadow: $box_shadow;
-        background-color: $hover1;
+        background-color: $background4;
       }
     }
     .audio {
@@ -214,7 +212,7 @@
         background-color: $background5;
         padding: 0 10px;
         &:hover {
-          background-color: $hover1;
+          background-color: $background4;
         }
       }
       .color_picker {
@@ -226,7 +224,7 @@
           background-color: $background5;
           box-shadow: 2px 2px 2px 0 #0e0e0e;
           &:hover {
-            background-color: $hover1;
+            background-color: $background4;
           }
         }
         .colorBtn {

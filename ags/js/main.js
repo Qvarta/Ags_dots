@@ -8,6 +8,7 @@ import ScreenshotMenu from "./screenshot/ScreenShot.js";
 import Launcher from "./launcher/launcher.js";
 import ContolPanel from "./control_panel/ContolPanel.js";
 import {WeatherForecast} from "./weather/Weather.js";
+import { WeatherOptions } from "./weather/Weather.js";
 import NotificationPopups from "./notifications/NotificationPopups.js";
 import { PromtPopup } from "./control_panel/widgets/Network.js"; 
 import Desktop from "./desktop/desktop.js";
@@ -34,6 +35,7 @@ App.config({
     Bar(),
     Launcher(),
     WeatherForecast(),
+    WeatherOptions(),
     Calendar(),
     ContolPanel(),
     PowerMenu(),

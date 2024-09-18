@@ -20,7 +20,7 @@ const AppItem = (app) =>
       children: [
         Widget.Icon({
           icon: app.iconName || "",
-          size: 44,
+          size: 38,
         }),
         Widget.Label({
           label: app.name,
@@ -36,7 +36,6 @@ const Launcher = () => {
   const list = Widget.Box({vertical: true});
 
   const entry = Widget.Entry({
-    className: "launcherEntry",
     primary_icon_name: icons.ui.search,
     hexpand: true,
     placeholder_text: "Search...",

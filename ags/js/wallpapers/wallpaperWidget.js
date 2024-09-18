@@ -1,13 +1,13 @@
-import { Widget} from "../import.js";
+import { Widget } from "../import.js";
 import options from "../options.js";
-import Wallpapers from "../services/appearanceService.js";
+import wallpapers from "../services/appearanceService.js";
 
-const wallpaperItem = (file) => {
-  return Widget.Button({
+const wallpaperItem = (file) =>
+  Widget.Button({
     vexpand: true,
     class_name: "wallpaperButton",
     cursor: "pointer",
-    onClicked: () => (Wallpapers.wallpaper = file),
+    onClicked: () => (wallpapers.wallpaper = file),
     child: Widget.Box({
       class_name: "wallpaperImage",
       css: `
@@ -21,20 +21,22 @@ const wallpaperItem = (file) => {
         `,
     }),
   });
-};
 
-export  default () =>
-  Widget.Scrollable({
+export default () => {
+  const flowBox =  Widget.FlowBox({
+    vpack: "center",
+    hpack: "center",
+    minChildrenPerLine: 5,
+    setup(self) {
+      wallpapers.wallpapers.forEach(path => self.add(wallpaperItem(path)));
+    },
+  });
+
+
+  return Widget.Scrollable({
     class_name: "scrollable",
     vscroll: "always",
     hscroll: "never",
-    child: Widget.FlowBox({
-      vpack: "center",
-      hpack: "center",
-      minChildrenPerLine: 5,
-      setup(self) {
-        Wallpapers.listWallpapers.forEach(path => self.add(wallpaperItem(path)));
-      },
-    }),
+    child: flowBox,
   });
-
+};

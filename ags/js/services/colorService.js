@@ -40,6 +40,7 @@ class ColorPicker extends Service {
       list.push(color);
       if (list.length > MAX_NUM_COLORS) list.shift();
       this.colors = list;
+      this.changed("colors");
     }
   }
   remove_color(color) {
