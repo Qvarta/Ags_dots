@@ -1,27 +1,37 @@
-.weatherWidget {
-  margin-left: 10px;
+.weekForecast {
   min-width: 300px;
   color: $foreground;
-  .weatherNow {
-    margin: 5px;
-    padding: 5px;
-    .title_label {
-      font-size: 20px;
-    }
-    .down {
-      background-color: $background;
-      padding: 10px 5px;
-      margin: 5px;
-      border-radius: 10px;
-      box-shadow: $box_shadow;
+  background-color: $background;
+  padding: 10px 5px;
+  margin: 5px;
+  border-radius: 10px;
+  box-shadow: $box_shadow;
 
-      .weatherBtn {
-        &:hover {
-          background-color: $background4;
-          border-radius: 10px;
-        }
-      }
+  .weatherBtn {
+    &:hover {
+      background-color: $background4;
+      border-radius: 10px;
     }
+  }
+}
+.dayForecast {
+  .smallContainer {
+    padding: 6px;
+    min-width: 75px;
+    background-color: transparentize($foreground, 0.1);
+    border-radius: 6px;
+    color: $background;
+    image {
+      // padding: 6px;
+      font-size: 18px;
+    }
+    label {
+      color: $background;
+    }
+  }
+  .feelsLike {
+    font-size: 26px;
+    font-weight: 900;
   }
 }
 .weatherOptionsForm {

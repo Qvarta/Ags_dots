@@ -4,53 +4,38 @@ import options from "../options.js";
 
 export const dayNumber = Variable("Day0");
 
-const updateTime = () =>
+
+const updates = () =>
   Widget.Box({
-    hpack: "end",
-    spacing: 15,
-    children:[
+    spacing: 10,
+    children: [
       Widget.Label({
-        class_name: "update",
-        label: weather.bind('city'),
+        vpack: "end",
+        label: weather.bind("city"),
       }),
       Widget.Label({
+        vpack: "end",
         class_name: "update",
-        hpack: "start",
         label: weather.bind("update").transform((result) => `󰚰  ${result}`),
-      })
+      }),
     ]
   });
 const short_date = (number) =>
   Widget.Label({
-    label: weather.bind("weather_data")
+    label: weather
+      .bind("weather_data")
       .transform((data) => data?.DailyForecasts?.[number]?.Date)
       .transform((date) =>
         new Date(date).toLocaleDateString("ru-RU", { weekday: "short" })
       ),
-  });
-const long_date = (number) =>
-  Widget.Label({
-    class_name: "long_date yellow",
-    hpack: "start",
-    label: weather.bind("weather_data")
-      .transform((data) => data?.DailyForecasts?.[number]?.Date)
-      .transform((date) => new Date(date).toLocaleDateString("ru-RU", { weekday: "long" }))
-      .transform((date) => date ===  new Date().toLocaleDateString("ru-RU", { weekday: "long" }) ? "СЕГОДНЯ:" : `${date.toUpperCase()}:`),
-  });
-const description = (number, daytime) =>
-  Widget.Label({
-    class_name: "description",
-    hpack: "start",
-    label: weather.bind("weather_data").transform(
-      (data) => `${data?.DailyForecasts?.[number]?.[daytime]?.IconPhrase}`
-    ),
   });
 const icon = (number, daytime, iconsize) =>
   Widget.Box({
     hexpand: true,
     vpack: "center",
     hpack: "center",
-    css: weather.bind("weather_data")
+    css: weather
+      .bind("weather_data")
       .transform((data) => data?.DailyForecasts?.[number]?.[daytime]?.Icon)
       .transform((icon) => `${options.paths.weather_icons}/${icon}.png`)
       .transform(
@@ -66,58 +51,109 @@ const icon = (number, daytime, iconsize) =>
   });
 const tempMax = (number) =>
   Widget.Label({
-    label: weather.bind("weather_data").transform(
-      (data) =>
-        `${data?.DailyForecasts?.[number]?.Temperature?.Maximum?.Value.toFixed(
-          0
-        )}°C`
-    ),
+    label: weather
+      .bind("weather_data")
+      .transform(
+        (data) =>
+          `${data?.DailyForecasts?.[
+            number
+          ]?.Temperature?.Maximum?.Value.toFixed(0)}°C`
+      ),
+  });
+const tempMin = (number) =>
+  Widget.Box({
+    spacing: 10,
+    class_name: "smallContainer",
+    children: [
+      Widget.Icon("weather-clear-night-symbolic"),
+      Widget.Label({
+        label: weather
+          .bind("weather_data")
+          .transform(
+            (data) =>
+              `${data?.DailyForecasts?.[
+                number
+              ]?.Temperature?.Minimum?.Value.toFixed(0)}°C`
+          ),
+      }),
+    ],
   });
 const feelsLike = (number) =>
   Widget.Label({
-    class_name: "description small",
-    hpack: "start",
-    label: weather.bind("weather_data").transform(
-      (data) =>
-        `Ощущается как ${data?.DailyForecasts?.[
-          number
-        ]?.RealFeelTemperature?.Maximum?.Value.toFixed(0)}°C`
-    ),
+    class_name: "feelsLike",
+    hexpand: true,
+    label: weather
+      .bind("weather_data")
+      .transform(
+        (data) =>
+          `${data?.DailyForecasts?.[
+            number
+          ]?.RealFeelTemperature?.Maximum?.Value.toFixed(0)}°C`
+      ),
   });
 const precip = (number, daytime) =>
-  Widget.Label({
-    hpack: "start",
-    label: weather.bind("weather_data")
-      .transform(
-        (data) =>
-          data?.DailyForecasts?.[number]?.[daytime]?.PrecipitationProbability
-      )
-      .transform((precip) => `Верояность осадков: ${precip}%`),
+  Widget.Box({
+    spacing: 10,
+    class_name: "smallContainer",
+    children: [
+      Widget.Icon("weather-showers-scattered-symbolic"),
+      Widget.Label({
+        hpack: "start",
+        label: weather
+          .bind("weather_data")
+          .transform(
+            (data) =>
+              data?.DailyForecasts?.[number]?.[daytime]
+                ?.PrecipitationProbability
+          )
+          .transform((precip) => `${precip}%`),
+      }),
+    ],
   });
 const windSpeed = (number, daytime) =>
-  Widget.Label({
-    label: weather.bind("weather_data")
-      .transform(
-        (data) => data?.DailyForecasts?.[number]?.[daytime]?.Wind?.Speed?.Value
-      )
-      .transform((speed) => parseFloat(speed))
-      .transform((speed) => ((speed * 1000) / 3600).toFixed(1).toString())
-      .transform((speed) => `Ветер: ${speed}м/с`),
+  Widget.Box({
+    spacing: 10,
+    class_name: "smallContainer",
+    children: [
+      Widget.Icon("weather-windy-symbolic"),
+      Widget.Label({
+        label: weather
+          .bind("weather_data")
+          .transform(
+            (data) =>
+              data?.DailyForecasts?.[number]?.[daytime]?.Wind?.Speed?.Value
+          )
+          .transform((speed) => parseFloat(speed))
+          .transform((speed) => ((speed * 1000) / 3600).toFixed(0).toString())
+          .transform((speed) => `${speed}м/с`),
+      }),
+    ],
   });
 const windDirection = (number, daytime) =>
-  Widget.Label({
-    label: weather.bind("weather_data")
-      .transform(
-        (data) =>
-          data?.DailyForecasts?.[number]?.[daytime]?.Wind?.Direction?.Localized
-      )
-      .transform((dir) => `󱗺 (${dir})`),
+  Widget.Box({
+    spacing: 10,
+    class_name: "smallContainer",
+    children: [
+      Widget.Icon("window-pop-out-symbolic"),
+      Widget.Label({
+        label: weather
+          .bind("weather_data")
+          .transform(
+            (data) =>
+              `${data?.DailyForecasts?.[number]?.[daytime]?.Wind?.Direction?.Localized}`
+          ),
+      }),
+    ],
   });
-
 const forecastDay = (number, daytime) =>
   Widget.Button({
     class_name: "weatherBtn",
     cursor: "pointer",
+    tooltip_text: weather
+      .bind("weather_data")
+      .transform(
+        (data) => `${data?.DailyForecasts?.[number]?.[daytime]?.IconPhrase}`
+      ),
     on_clicked: () => {
       // dayNumber.value = number;
       dayNumber.value = `Day${number}`;
@@ -134,38 +170,12 @@ const forecastDay = (number, daytime) =>
   });
 const Week = () =>
   Widget.Box({
-    class_name: "down",
+    class_name: "weekForecast",
     children: [
       Widget.Box({
         hexpand: true,
         children: Array.from({ length: 5 }, (_, i) => forecastDay(i, "Day")),
       }),
-    ],
-  });
-const currentDay = (number, daytime) =>
-  Widget.Box({
-    class_name: "weatherInfo",
-    vertical: true,
-    vpack: "center",
-    hexpand: true,
-    // hpack: "start",
-    children: [
-      Widget.Box({
-        spacing: 10,
-        children:[
-          long_date(number),
-          description(number, daytime),
-        ]
-      }),
-      
-      feelsLike(number),
-      precip(number, daytime),
-      Widget.Box({
-        hpack: "start",
-        spacing: 8,
-        children: [windSpeed(number, daytime), windDirection(number, daytime)],
-      }),
-      updateTime(),
     ],
   });
 export const WeekForecast = () =>
@@ -176,9 +186,46 @@ export const WeekForecast = () =>
       child: Week(),
     }),
   });
-
+const currentDay = (number, daytime) =>
+  Widget.Box({
+    class_name: "weatherInfo",
+    vpack: "center",
+    hexpand: true,
+    spacing: 10,
+    children: [
+      Widget.Box({
+        vertical: true,
+        spacing: 5,
+        vpack: "center",
+        children: [
+          Widget.Box({
+            hpack: "start",
+            spacing: 5,
+            children: [precip(number, daytime), tempMin(number)],
+          }),
+          Widget.Box({
+            hpack: "start",
+            spacing: 5,
+            children: [
+              windSpeed(number, daytime),
+              windDirection(number, daytime),
+            ],
+          }),
+          updates(),
+        ],
+      }),
+      Widget.Box({
+        vertical: true,
+        children: [
+          icon(number, daytime, 65),
+          feelsLike(number),
+        ],
+      }),
+    ],
+  });
 export const DayForecast = () =>
   Widget.Stack({
+    class_name: "dayForecast",
     visible: weather.bind("status"),
     children: {
       Day0: currentDay(0, "Day"),

@@ -132,7 +132,7 @@ class WeatherService extends Service {
     }).catch(err => print(err));
   }
   _oldWeather() {
-    const jsonPath = `${options.paths.weather}/weather.json`
+    const jsonPath = `${options.paths.weather}weather.json`
     if (!isFile(jsonPath)) return;
     Utils.notify({
       summary: "Error receiving weather",
