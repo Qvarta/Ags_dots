@@ -1,7 +1,5 @@
-import { Service, Utils, Widget } from "../../import.js"
-import { Menu2, ArrowToggleButton } from "../../util/ToggleButton.js"
+import { Menu, ArrowToggleButton } from "../../util/Widgets/ToggleButton.js"
 import icons from "../../util/icons.js"
-
 const bluetooth = await Service.import("bluetooth")
 
 export const BluetoothToggle = () => ArrowToggleButton({
@@ -45,7 +43,7 @@ const DeviceItem = (device) => Widget.Box({
     ],
 })
 
-export const BluetoothDevices = () => Menu2({
+export const BluetoothDevices = () => Menu({
   name: "bluetooth",
   title_content:[],
   main_content: [

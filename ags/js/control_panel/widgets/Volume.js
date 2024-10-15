@@ -1,13 +1,14 @@
-import { Arrow } from "../../util/ToggleButton.js";
+import { Arrow } from "../../util/Widgets/ToggleButton.js";
 import icons from "../../util/icons.js";
-import { Widget, Audio } from "../../import.js";
-import {isInstalled} from "../../util/helpers.js";
+// import { Widget, Audio } from "../../import.js";
+import {isInstalled} from "../../util/functions/systemUtils.js";
+const audio = await Service.import('audio')
 
 const VolumeIndicator = (type = "speaker") =>
   Widget.Button({
     class_name: "volume-indicator",
     vpack: "center",
-    on_primary_click: () => (Audio[type].is_muted = !Audio[type].is_muted),
+    on_primary_click: () => (audio[type].is_muted = !audio[type].is_muted),
     on_secondary_click: () => {
       if(!isInstalled("pavucontrol")) {
         return;
@@ -17,20 +18,20 @@ const VolumeIndicator = (type = "speaker") =>
       }
     },
     child: Widget.Icon({
-      icon: Audio[type].bind("is_muted").as((isMuted) =>isMuted ? icons.audio[type].muted : icons.audio[type].high),
-      tooltipText: Audio[type].bind("volume").as((vol) => `Volume: ${Math.floor(vol * 100)}%`),
+      icon: audio[type].bind("is_muted").as((isMuted) =>isMuted ? icons.audio[type].muted : icons.audio[type].high),
+      tooltipText: audio[type].bind("volume").as((vol) => `Volume: ${Math.floor(vol * 100)}%`),
     }),
   });
 const VolumeSlider = (type = "speaker") =>
   Widget.Slider({
     hexpand: true,
     draw_value: false,
-    on_change: ({ value }) => (Audio[type].volume = value),
-    value: Audio[type].bind("volume"),
+    on_change: ({ value }) => (audio[type].volume = value),
+    value: audio[type].bind("volume"),
   });
 const PercentLabel = (type = "speaker") =>
-  Widget.Label({ class_name: "label-percent" }).hook(Audio, (label) => {
-    if (Audio[type]) label.label = `${Math.floor(Audio[type].volume * 100)}%`;
+  Widget.Label({ class_name: "label-percent" }).hook(audio, (label) => {
+    if (audio[type]) label.label = `${Math.floor(audio[type].volume * 100)}%`;
   });
 export const Volume = () =>
   Widget.Box({

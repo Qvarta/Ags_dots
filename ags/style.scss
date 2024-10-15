@@ -4,17 +4,10 @@
 //  ---------------------------------------------------------------------------
 
 * {
-  all: unset;
-  padding: 0;
-  margin: 0;
-  border: 0;
   font-family: "Noto Sans";
   font-size: 16px;
-  text-shadow: $text_shadow;
 }
-window {
-  background-color: transparent;
-}
+
 tooltip {
   * {
     all: unset;
@@ -32,4 +25,5 @@ tooltip {
     margin: 4px;
   }
 }
+
 

@@ -1,8 +1,8 @@
 // @ts-nocheck
-
-import { Utils, Service } from "../import.js";
 import options from "../options.js";
-import { isNetwork, isInstalled, isFile } from "../util/helpers.js";
+import { isNetwork, isInstalled} from "../util/functions/systemUtils.js";
+import { fileExists } from "../util/functions/fileUtils.js";
+import { initialConfig } from "../util/functions/variableUtils.js";
 class WeatherService extends Service {
   static {
     Service.register(
@@ -31,7 +31,9 @@ class WeatherService extends Service {
   _key = "";
   _lang = "";
   _code = "";
-
+  get city() {
+    return this._city;
+  }
   get weather_data() {
     return this._weather_data;
   }
@@ -44,18 +46,10 @@ class WeatherService extends Service {
   get status() {
     return this._status;
   }
-  get key() {
-    return this._key;
-  }
-  get lang() {
-    return this._lang;
-  }
-  get city() {
-    return this._city;
-  }
-  set area([key, city, lang]) {
+
+  set area(city) {
     const encodedCity = encodeURIComponent(city);
-    const command = `curl -s 'http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${key}&q=${encodedCity}&language=${lang}'`;
+    const command = `curl -s 'http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${this._key}&q=${encodedCity}&language=${this._lang}'`;
     Utils.execAsync(["bash", "-c", `${command}`]).then((result) => {
       const city_json = JSON.parse(result)
       const city_list = city_json.map(item => ({
@@ -65,7 +59,6 @@ class WeatherService extends Service {
         administrativeArea: item.AdministrativeArea.LocalizedName
     }));
     this.updateProperty("city_data", city_list);
-    // console.log(city_list);
     }).catch(err => print(err));
   }
   set city ([name, code]) {
@@ -73,47 +66,29 @@ class WeatherService extends Service {
     this.updateProperty("code", code);
     this.updateProperty("city_data", []);
   }
-  set request ([name, key, lang]) {
-    const data = {
-      code: this._code,
-      name: name,
-      key: key,
-      lang: lang
-    };
+  set request (name) {
+    const data = JSON.parse(Utils.readFile(options.paths.settings));
+    data.city = name;
+    data.cityCode = this._code;
+    data.apiKey = this._key;
+    data.language = this._lang;
     const jsonData = JSON.stringify(data);
-    Utils.ensureDirectory(options.paths.request);
-    Utils.writeFile(jsonData, `${options.paths.request}/request.json`).catch(err => print(err));
-
-    this.updateProperty("city", data.name);
-    this.updateProperty("code", data.code);
-    this.updateProperty("key", data.key);
-    this.updateProperty("lang", data.lang);
+    Utils.writeFile(jsonData, options.paths.settings).catch(err => print(err));
     this._newWeather();
   }
   constructor() {
     super();
-    this._readArea();
-    Utils.timeout(2000, () => {
-      // Utils.interval(3600000, this._newWeather.bind(this));
-      this._oldWeather();
-    });
-  }
-  _readArea() {
-    const area = `${options.paths.request}/request.json`;
-    if (isFile(area)){
-      const data = JSON.parse(Utils.readFile(area));
-      this.updateProperty("city", data.name);
-      this.updateProperty("code", data.code);
-      this.updateProperty("key", data.key);
-      this.updateProperty("lang", data.lang);
-      return true;
-    }
-    return false;
+    this._city = initialConfig.city;
+    this._key = initialConfig.apiKey;
+    this._lang = initialConfig.language;
+    this._code = initialConfig.cityCode;
+    // Utils.interval(3600000, this._newWeather.bind(this));
+    this._oldWeather();
   }
   _newWeather() {
     this.updateProperty("status", false)
     if (!isInstalled("curl")) return;
-    if (!isNetwork("weather")) {
+    if (!isNetwork("Weather service")) {
       this._oldWeather();
       return;
     };
@@ -125,20 +100,15 @@ class WeatherService extends Service {
         this.updateProperty("status", true);
         Utils.ensureDirectory(options.paths.weather);
         Utils.writeFile(result, `${options.paths.weather}/weather.json`).catch(err => print(err));
+        const hours = new Date().getHours().toString().padStart(2, "0");
+        const minutes = new Date().getMinutes().toString().padStart(2, "0");
+        this.updateProperty("update", `${hours}:${minutes}`);
       };
-      const hours = new Date().getHours().toString().padStart(2, "0");
-      const minutes = new Date().getMinutes().toString().padStart(2, "0");
-      this.updateProperty("update", `${hours}:${minutes}`);
     }).catch(err => print(err));
   }
   _oldWeather() {
     const jsonPath = `${options.paths.weather}weather.json`
-    if (!isFile(jsonPath)) return;
-    Utils.notify({
-      summary: "Error receiving weather",
-      body: `Used old weather data from ${jsonPath}`,
-      iconName: "gis-weather-symbolic",
-    }).catch((error) => {console.error(error)});
+    if (!fileExists(jsonPath)) return;
     Utils.readFileAsync(jsonPath).then((result) => {
       const weather_json = JSON.parse(result);
       this.updateProperty("weather_data", weather_json);

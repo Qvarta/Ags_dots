@@ -1,6 +1,4 @@
-import {App, Utils} from "./import.js";
 import options from "./options.js";
-import { isInstalled } from "./util/helpers.js";
 import Bar from "./bar/bar.js";
 import Calendar from "./calendar/Calendar.js";
 import PowerMenu from "./power_menu/PowerMenu.js";
@@ -14,16 +12,12 @@ import { PromtPopup } from "./control_panel/widgets/Network.js";
 import Desktop from "./desktop/desktop.js";
 import {Wallpapers} from "./wallpapers/Wallpapers.js";
 import Updates from "./updates/updates.js";
-import PackegesInfo from "./updates/packegesInfo.js";
-const notifications = await Service.import("notifications")
+import PackegesInfo from "./updates/packageInfo.js";
+import Settings from "./settings/settings.js";
+import { isInstalled } from "./util/functions/systemUtils.js";
+import {css, scss} from "./util/functions/variableUtils.js";
 
-// main scss file
-export const scss = `${App.configDir}/style.scss`;
 
-// target css file
-export const css = `/tmp/my-style.css`;
-
-// make sure sassc is installed on your system
 if (!isInstalled("sassc")) {
   Utils.notify("Error", "Sassc is not installed", "dialog-error-symbolic");
 };
@@ -46,6 +40,7 @@ App.config({
     Wallpapers(),
     Updates(),
     PackegesInfo(),
+    Settings(),
   ],
   closeWindowDelay: {
     dashboard: options.transition.duration,

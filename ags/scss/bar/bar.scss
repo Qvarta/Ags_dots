@@ -1,12 +1,13 @@
 .bar {
   background-color: $background;
   margin: 5px;
-  border-radius: 10px;
+  border-radius: 20px;
   box-shadow: $box_shadow;
-
   .bar_module {
+    all: unset;
     margin: 4px 1px;
     padding: 0 8px;
+    background-color: transparent;
     color: $foreground;
     &.left {
       margin-left: 5px;
@@ -18,43 +19,54 @@
     &:hover {
       background-color: $background4;
       border-radius: 20px;
-      color:$background;
+      color: $background;
     }
   }
   .left {
     .weather {
+      all: unset;
+      background-color: transparent;
       padding: 0 10px;
       margin: 3px 30px;
       color: $foreground;
 
       &:hover {
         border-radius: 4px;
-        color:$background;
+        color: $background;
         background-color: $background4;
       }
     }
   }
   .center {
     button {
+      all: unset;
       transition: all 0.3s ease-out;
-      border-radius: 8px;
-      min-height: 12px;
-      padding: 0 6px;
-      background-color: $background3;
-      &:hover {
-        background-color: $hover2;
-      }
+      padding: 2px 6px;
+      border-radius: 20px;
+      background-color: $background2;
+
       &.occupied {
         background-color: $foreground;
+        color: $background;
+      }
+
+      &:hover {
+        background-color: $yellow;
       }
       &.active {
-        padding: 0 25px;
-        background-color: $foreground;
+        color: $background;
+        background-color: $blue;
       }
+    }
+    label {
+      font-weight: bold;
     }
   }
   .right {
     .trayContainer {
+      button {
+        all: unset;
+      }
       &:hover {
         .bar_module {
           background-color: $background4;
@@ -64,6 +76,7 @@
       }
     }
     .layoutBtn {
+      all: unset;
       margin: 5px 1px;
       padding: 0 5px;
       .layout {
@@ -72,7 +85,7 @@
         font-size: 14px;
         font-weight: 600;
         border-radius: 4px;
-        &.cups{
+        &.cups {
           color: $background;
           background-color: $foreground;
         }
@@ -85,6 +98,7 @@
       }
     }
     .clockBtn {
+      all: unset;
       margin: 4px 1px;
       padding: 0 5px;
       .clock {
@@ -101,8 +115,8 @@
         }
       }
     }
-    .charging {
-      color: green;
+    .cyan {
+      color: $cyan;
     }
   }
 }

@@ -21,7 +21,7 @@ export const BrightnessIndicator = () => Widget.Button({
   tooltip_text: brightness.bind("screen").as(v =>
     `Screen Brightness: ${Math.floor(v * 100)}%`),
 });
-export const Brightness = () =>
+export default () =>
   Widget.Box({
     class_name: "sliderContainer",
     children: [

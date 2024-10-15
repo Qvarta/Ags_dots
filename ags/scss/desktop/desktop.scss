@@ -4,10 +4,7 @@
     color: $foreground;
     text-shadow: none;
   }
-  .yellow {
-    text-shadow: 1px 1px 2px rgb(0, 0, 0);
-    color: rgb(255, 161, 12);
-  }
+  // .cava,
   .dayNow,
   .timeNow,
   .nowPlaying,
@@ -47,17 +44,18 @@
     }
     .player_icon {
       padding: 10px;
+      margin: 10px 0;
       background-color: transparentize($foreground, 0.1);
       border-radius: 10px;
       color: $background;
-      font-size: 18px;
+      font-size: 16px;
     }
-    .artist {
+    .track_artist {
       font-size: 20px;
       font-weight: bold;
     }
     .track_title {
-      font-size: 18px;
+      font-size: 16px;
     }
   }
   .dayNow {
@@ -73,6 +71,7 @@
     }
     .date_text {
       .weekday {
+        font-size: 30px;
         font-weight: bold;
       }
     }
@@ -81,5 +80,8 @@
     color: $foreground;
     font-size: 40px;
     font-weight: bold;
+  }
+  .cava{
+    color: $foreground;
   }
 }

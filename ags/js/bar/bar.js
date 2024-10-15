@@ -1,3 +1,5 @@
+import options from "../options.js";
+import settings from "../services/settingsServise.js";
 import LauncherButton from "./widgets/launcherButton.js";
 import Weather from "./widgets/Weather.js";
 import Workspaces from "./widgets/Workspaces.js";
@@ -5,8 +7,6 @@ import Clock from "./widgets/Clock.js";
 import KeyboardLayout from "./widgets/KeyboardLayout.js";
 import Tray from "./widgets/Tray.js";
 import PowerMenu from "./widgets/PowerButton.js";
-import options from "../options.js";
-const bluetooth = await Service.import("bluetooth");
 
 const Left = () =>
   Widget.Box({
@@ -52,9 +52,13 @@ export default () =>
     name: `bar`,
     exclusivity: "exclusive",
     anchor: ["top"],
+    css: "background-color: transparent;",
     child: Widget.CenterBox({
+      setup: (self) =>
+        self.hook(settings, () => {
+          self.css = `min-width: ${settings.settings.barSize}px;`;
+        }),
       className: "bar",
-      css: `min-width: ${options.bar.width}px;`,
       hexpand: false,
       vertical: false,
       startWidget: Left(),

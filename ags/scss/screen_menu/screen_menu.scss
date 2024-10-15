@@ -1,7 +1,8 @@
 .screenMenu{
     .bigBtn{
+        all: unset;
         margin: 10px;
-        background-color: transparentize($background, 0.2);
+        background-color: $background;
         min-width: 150px;
         min-height: 150px;
         border: $border;

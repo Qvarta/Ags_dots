@@ -1,7 +1,6 @@
 import icons from "../util/icons.js";
-import { App, Widget } from "../import.js";
 import options from "../options.js";
-import PopupWindow from "../util/PopupWindow.js";
+import PopupWindow from "../util/Widgets/PopupWindow.js";
 
 const WINDOW_NAME = "screenshotmenu";
 const screen_path = `$HOME/Screenshots/`;
@@ -29,6 +28,7 @@ export default () =>
   PopupWindow({
     name: WINDOW_NAME,
     layer: "overlay",
+    css:'background-color: transparent;',
     child: Widget.Box({
       className: "screenMenu",
       spacing: 15,

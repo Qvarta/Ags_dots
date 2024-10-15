@@ -1,23 +1,16 @@
-import { user, get_screen_resolution } from "./util/helpers.js";
+import {getScreenResolution} from "./util/functions/imageUtils.js";
 
 export default {
   powermenu: {
     shutdown: "systemctl poweroff",
     reboot: "systemctl reboot",
-    lock: `playerctl -a pause
-    swaylock -f -c "#141319"`,
+    lock: `hyprlock`,
     logout: "hyprctl dispatch exit",
   },
   transition: {
     duration: 300,
   },
   themes: {
-    vscode_dark: "Tokyo Night",
-    vscode_light: "Tokyo Night Light",
-    gtk_dark: "Tokyonight-Dark",
-    gtk_light: "Tokyonight-Light",
-    icon_light: "Tokyonight-Light",
-    icon_dark: "Tokyonight-Dark",
     set_theme: `gsettings set org.gnome.desktop.interface gtk-theme`,
     set_icons: `gsettings set org.gnome.desktop.interface icon-theme`,
     get_theme: "gsettings get org.gnome.desktop.interface gtk-theme",
@@ -30,26 +23,21 @@ export default {
     window: "hyprshot -m window -o",
   },
   paths: {
-    current: `${App.configDir}/scss/colors.scss`,
-    wallpapers: `${App.configDir}/wallpapers`,
-    thumbnails: `${Utils.CACHE_DIR}/wallpapers/`,
-    notify:`${Utils.CACHE_DIR}/notifications/notifications.json`,
-    scss: `${App.configDir}/scss`,
-    gtk3: `${user.config}/gtk-3.0`,
-    gtk4: `${user.config}/gtk-4.0`,
-    micro: `${user.config}/micro`,
-    vscode: `${user.config}/VSCodium/User/settings.json`,
-    hyprland: `${user.config}/hypr/vars/theme.conf`,
-    kitty: `${user.config}/kitty`,
-    weather_icons: `${App.configDir}/icons`,
+    cashdir: `${Utils.CACHE_DIR}/wallpapers/`,
+    weather_icons: `${App.configDir}/assets/icons`,
     weather: `${Utils.CACHE_DIR}/weather/`,
-    request: `${Utils.CACHE_DIR}/weather/`,
+    cover: `${App.configDir}/assets/cover.png`,
+    settings: `${App.configDir}/assets/settings.json`,
   },
   screen:{
-    width: get_screen_resolution().width,
-    height: get_screen_resolution().height,
+    width: getScreenResolution().width,
+    height: getScreenResolution().height,
   },
-  bar: {
-      width: 1000,
-    },
+  avatar: {
+    image: `${App.configDir}/assets/qvarta.png`,
+    size:35,
+  },
+  colors:{
+    number: 8,
+  }
 };

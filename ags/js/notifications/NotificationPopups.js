@@ -80,6 +80,7 @@ function PopupList() {
 
 export default (monitor=0) => Widget.Window({
   monitor,
+  css:'background-color: transparent;',
   name: `notifications${monitor}`,
   anchor: ["top"],
   layer: "top",

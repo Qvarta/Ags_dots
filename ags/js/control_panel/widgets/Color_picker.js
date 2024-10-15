@@ -1,53 +1,32 @@
-import { Variable } from "../../import.js";
-import colorpicker from "../../services/colorService.js"
+import colorpicker from "../../services/colorService.js";
 
-const cols = Variable([]);
-
-const css = (color) => `
-* {
-    background-color: ${color};
-    min-height: 40px;
-    min-width: 40px;
-    margin: 5px;
-    border-radius: 10px;
-}
-`
-
-export const colorPicker = () => {
-    const colors = Widget.Box({
-      children: colorpicker.bind("colors").as(colors => colors.map(color => Widget.Button({
-        css: css(color),
+export const pickerBtn = () =>
+  Widget.Button({
+    class_name: "panelBtn",
+    on_primary_click: () => colorpicker.pick_color(),
+    child: Widget.Box({
+      spacing: 10,
+      children: [
+        Widget.Icon("color-picker-symbolic"),
+        Widget.Label({
+          label: "Color picker",
+          hexpand: true,
+          xalign: 0,
+        }),
+      ],
+    }),
+  });
+export const colors = () => Widget.Box({
+  class_name: "color_picker",
+  children: colorpicker.bind("colors").as((colors) =>
+    colors.map((color) =>
+      Widget.Button({
+        css:`* {background-color: ${color};}`,
         class_name: "colorBtn",
-        on_primary_click: () => colorpicker.to_clipboard(color),
-        on_secondary_click: () => colorpicker.remove_color(color),
-      }))),
-      
-    })
-    return Widget.Box({
-        class_name: "color_picker",
-        spacing: 5,
-        vertical: true,
-        children: [
-          Widget.Box({
-            children: [
-              Widget.Label({ label: "Color picker:", hexpand: true, xalign: 0 }),
-              Widget.Button({
-                class_name: "pickerBtn",
-                on_primary_click: () => colorpicker.pick_color(),
-                on_secondary_click: () => colorpicker.colors = [],
-                child: Widget.Icon({
-                  icon: "color-picker-symbolic",
-                  size: 22,
-                  hpack: "center",
-                }),
-              }),
-            ],
-          }),
-          Widget.Box({
-            visible: colorpicker.bind("colors").as(colors => colors.length > 0),
-            child: colors,
-          }),
-        ]
-
+        on_primary_click: () => colorpicker.to_clipboard = color,
+        on_secondary_click: () => colorpicker.remove = color,
       })
-};
+    )
+  ),
+});
+

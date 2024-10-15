@@ -1,0 +1,74 @@
+[
+  {
+    "name": "Best FM",
+    "url": "http://nashe1.hostingradio.ru/best-256"
+  },
+  {
+    "name": "Ретро FM",
+    "url": "http://online-1.gkvr.ru:8000/retro_izh_64.aac"
+  },
+  {
+    "name": "Like FM",
+    "url": "http://ic7.101.ru:8000/v12_1"
+  },
+  {
+    "name": "Юмор FM",
+    "url": "http://ic7.101.ru:8000/v5_1"
+  },
+  {
+    "name": "Рок FM",
+    "url": "http://nashe1.hostingradio.ru/rock-256"
+  },
+  {
+    "name": "Шоколад",
+    "url": "http://choco.hostingradio.ru:10010/fm"
+  },
+  {
+    "name": "Comedy radio",
+    "url": "http://pub0302.101.ru:8000/stream/reg/mp3/128/region_comedy_31"
+  },
+  {
+    "name": "Европа Плюс",
+    "url": "http://online-1.gkvr.ru:8000/europa_rnd_64.aac"
+  },
+  {
+    "name": "Хит FM",
+    "url": "http://online-1.gkvr.ru:8000/hitfm_klg_64.aac"
+  },
+  {
+    "name": "Capital FM",
+    "url": "http://icecast.vgtrk.cdnvideo.ru/capitalfmmp3"
+  },
+  {
+    "name": "Love Радио",
+    "url": "http://online-1.gkvr.ru:8000/love_kem_64.aac"
+  },
+  {
+    "name": "Радио Монте-Карло",
+    "url": "http://online-1.gkvr.ru:8000/mc_klg_64.aac"
+  },
+  {
+    "name": "Americas Best Ballads",
+    "url": "http://prmstrm.1.fm:8000/onelive"
+  },
+  {
+    "name": "Euro 80's",
+    "url": "http://prmstrm.1.fm:8000/80s_90s"
+  },
+  {
+    "name": "EHR FM Super Hits",
+    "url": "http://stream.europeanhitradio.com:8000/Stream_21.mp3"
+  },
+  {
+    "name": "Big FM",
+    "url": "http://streams.bigfm.de/bigfm-sunsetlounge-128-mp3"
+  },
+  {
+    "name": "Radio Record",
+    "url": "http://online2.gkvr.ru:8000/record_nno_64.aac"
+  },
+  {
+    "name": "Radio WIT",
+    "url": "http://wit90s.ice.infomaniak.ch/wit90s.mp3"
+  }
+]

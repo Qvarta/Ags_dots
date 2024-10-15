@@ -11,15 +11,15 @@
     label {
       color: $foreground;
     }
-    // trough {
-    //   border-radius: 10px;
-    //   background-color: $background2;
-    //   slider {
-    //     min-width: 10px;
-    //     border-radius: 10px;
-    //     background-color: $foreground;
-    //   }
-    // }
+    trough {
+      border-radius: 10px;
+      background-color: transparent;
+      slider {
+        min-width: 10px;
+        border-radius: 10px;
+        background-color: $foreground;
+      }
+    }
   }
   .wallpaperButton {
     border-radius: 10px;
@@ -36,3 +36,13 @@
     }
   }
 }
+// flowboxchild{
+//   min-height: 100px;
+//   min-width: 100px;
+//   border-radius: 10px;
+//   image {
+//     min-height: 100px;
+//     min-width: 100px;
+//     border-radius: 10px;
+//   }
+// }

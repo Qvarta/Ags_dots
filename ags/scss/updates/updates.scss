@@ -2,29 +2,44 @@
   padding: 20px;
 
   .title {
-    background-color: $background;
+    background-color: $background2;
     box-shadow: $box_shadow;
     padding: 10px;
     border-radius: 10px 10px 0 0;
   }
-
   .footer {
-    background-color: $background;
+    all: unset;
+    background-color: $background2;
     box-shadow: $box_shadow;
     padding: 10px;
     border-radius: 0 0 10px 10px;
+    button{
+      all: unset;
+      background-color: $background2;
+      min-width: 100px;
+      border-radius: 8px;
+      padding: 5px;
+      &:hover {
+        background-color: $background4;
+      }
+    }
   }
   .scrollable {
     min-height: 400px;
-    background-color: $background2;
+    min-width: 600px;
+    border-radius: 0%;
+    background-color: $background;
     box-shadow: 1px 0px 2px 0 $shadow_color;
     padding: 10px;
   }
   .updates_item {
-    &:hover,
-    &:focus {
+    all: unset;
+    margin: 0 10px;
+    min-width: 200px;
+    background-color: transparent;
+    &:hover {
       background-color: $background4;
-      box-shadow: $box_shadow;
+      border-radius: 10px;
     }
   }
 
@@ -40,12 +55,12 @@
   }
 }
 .info {
-  background-color: transparent;
+  all:unset;
   .info_box {
     margin: 10px;
     min-width: 400px;
     background-color: $background;
-    box-shadow: $box_shadow;
+    border: 2px solid $shadow_color;
     padding: 10px;
     border-radius: 10px;
     label {
@@ -68,14 +83,16 @@
       padding: 10px;
     }
   }
-
-  .spinner {
+  spinner {
     background-color: $background;
-    box-shadow: $box_shadow;
+    border: 2px solid $shadow_color;
     margin: 10px;
     padding: 10px;
     border-radius: 10px;
     min-width: 40px;
     min-height: 40px;
+    image{
+      color: $foreground;
+    };
   }
 }

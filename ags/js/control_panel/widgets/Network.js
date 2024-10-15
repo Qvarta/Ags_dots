@@ -1,8 +1,7 @@
-import { Menu2, ArrowToggleButton } from "../../util/ToggleButton.js";
-import PopupWindow from "../../util/PopupWindow.js";
+import { Menu, ArrowToggleButton } from "../../util/Widgets/ToggleButton.js";
+import PopupWindow from "../../util/Widgets/PopupWindow.js";
 import icons from "../../util/icons.js";
-import { Widget, Utils, Variable } from "../../import.js";
-import { isInstalled } from "../../util/helpers.js";
+import { isInstalled } from "../../util/functions/systemUtils.js";
 
 const { wifi } = await Service.import("network");
 const WINDOW_NAME = "promt";
@@ -23,7 +22,7 @@ export const NetworkToggle = () =>
   });
 
 export const WifiSelection = () =>
-  Menu2({
+  Menu({
     name: "network",
     title_content: [],
     main_content: [
@@ -84,6 +83,7 @@ const promtEntry = () =>
               const device = Utils.exec(`bash -c "nmcli -t -f DEVICE device | head -n 1"`);
               Utils.exec(`nmcli device disconnect ${device}`);
             }
+            self.caps_lock_warning = true;
             self.grab_focus();
             self.text = "";
           }),
@@ -112,7 +112,6 @@ const promtEntry = () =>
     ]
   })
 ;
-
 export const PromtPopup = () =>
   PopupWindow({
     name: WINDOW_NAME,

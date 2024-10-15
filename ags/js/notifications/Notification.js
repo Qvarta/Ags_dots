@@ -1,5 +1,5 @@
 import icons from "../util/icons.js"
-import {get_local_time} from "../util/helpers.js"
+import {getLocalTime} from "../util/functions/systemUtils.js"
 
 
 const NotificationIcon = ({ app_entry, app_icon, image }) => {
@@ -68,7 +68,7 @@ export default (notification) => {
               Widget.Label({
                 class_name: "time",
                 vpack: "start",
-                label: get_local_time(notification.time, "%H:%M"),
+                label: getLocalTime(notification.time, "%H:%M"),
               }),
               Widget.Button({
                 class_name: "close-button",

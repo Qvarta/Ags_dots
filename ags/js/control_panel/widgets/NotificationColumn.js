@@ -1,5 +1,5 @@
 import Notification from "../../notifications/Notification.js"
-import { ToggleButton, Menu2, Row } from "../../util/ToggleButton.js";
+import { ToggleButton, Menu, Row } from "../../util/Widgets/ToggleButton.js";
 
 import options from "../../options.js"
 
@@ -92,7 +92,7 @@ const Placeholder = () =>
     visible: notifications.bind("notifications").transform((n) => n.length === 0),
   });
 
-const notificationsScolable = () =>Menu2({
+const notificationsScolable = () =>Menu({
   name: "notify_center",
   title_content: [],
   main_content: [
@@ -109,7 +109,7 @@ const notificationsScolable = () =>Menu2({
 });
 
 
-export const NotificationColumn = () =>
+export default () =>
   Widget.Box({
     class_name: "notification_widget",
     vertical: true,

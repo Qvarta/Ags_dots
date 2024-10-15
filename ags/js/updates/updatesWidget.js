@@ -9,8 +9,8 @@ export const Title = () => {
     child: Widget.Box({
       spacing: 10,
       children: [
-        Widget.Label({ label: "Name", class_name: "max-width", xalign: 0 }),
-        Widget.Label({ label: "Version", class_name: "max-width", xalign: 0 }),
+        Widget.Label({ label: "Name", class_name: "max-width"}),
+        Widget.Label({ label: "Version", class_name: "max-width"}),
         Widget.Label({ label: "Repository", hpack: "center" }),
       ],
     }),
@@ -20,12 +20,21 @@ export const Footer = () =>
   Widget.Box({
     class_name: "footer",
     hexpand: true,
-    child: Widget.Label({
+    children:[Widget.Label({
       label: updates
         .bind("updates")
         .transform((updates) => updates.length + " updates available"),
       hpack: "center",
     }),
+    Widget.Separator({hexpand: true, css:"background-color: transparent;"}),
+    Widget.Button({
+      class_name: "button",
+      on_clicked: () => {
+        App.closeWindow('updates');
+        updates._update();
+      },
+      child: Widget.Label({ label: "Update", hpack: "center" }),
+    })], 
   });
 const updateItem = (item) => {
   return Widget.Button({
@@ -46,6 +55,7 @@ const updateItem = (item) => {
           maxWidthChars: 20,
           truncate: "end",
           wrap: true, 
+          tooltip_text: item.name
         }),
         Widget.Label({
           label: item.version,
@@ -53,14 +63,13 @@ const updateItem = (item) => {
           maxWidthChars: 15,
           truncate: "end",
           wrap: true,
-          xalign: 0,
         }),
         Widget.Label({ 
           label: item.repository,
-          maxWidthChars: 15,
+          maxWidthChars: 20,
           truncate: "end",
           wrap: true,
-          xalign: 0,
+          tooltip_text: item.repository,
          }),
       ],
     }),

@@ -1,9 +1,10 @@
-@import "colors.scss";
+@import "currentTheme.scss";
 
 $green: #09611f;
 $red: #cc241d;
 $yellow: #9a5f24;
-$blue: #333346;
+$blue: #27A1B9;
+$cyan: #205E6E;
 
 
 $border: 1px solid $foreground;
@@ -21,5 +22,5 @@ $border: 1px solid $foreground;
 @import "wallpapers/wallpapers.scss";
 @import "updates/updates.scss";
 @import "notifications/notifications.scss";
-
+@import "settings/settings.scss";
 

@@ -1,0 +1,157 @@
+.settings {
+  background-color: $background;
+  box-shadow: $box_shadow;
+  border-radius: 10px;
+  margin: 10px;
+  padding: 20px;
+  .saveBtn {
+    all: unset;
+    background-color: $background2;
+    min-width: 200px;
+    border-radius: 8px;
+    margin-top: 10px;
+    padding: 5px;
+    &:hover {
+      background-color: $background4;
+    }
+  }
+  .page {
+    background-color: $background;
+    .optionsItem {
+      background-color: $background2;
+      color: $foreground;
+      border-radius: 10px;
+      padding: 5px;
+      label {
+        min-width: 150px;
+        padding: 5px;
+      }
+    }
+
+    .sliderContainer {
+      scale {
+        all: unset;
+        trough {
+          all: unset;
+          transition: 200ms;
+          border-radius: 10px;
+          background-color: $background;
+          min-height: 10px;
+          min-width: 5px;
+
+          highlight,
+          progress {
+            all: unset;
+            background-color: $blue;
+            border-radius: 20px;
+            min-height: 5px;
+            min-width: 5px;
+          }
+        }
+
+        slider {
+          all: unset;
+          box-shadow: none;
+          background-color: transparent;
+          border: 1px solid transparent;
+          transition: 200ms;
+          border-radius: 10px;
+          min-height: 12px;
+          min-width: 12px;
+          margin: -4px;
+        }
+
+        &:hover {
+          slider {
+            background-color: $foreground;
+          }
+        }
+      }
+      label {
+        all: unset;
+        padding: 0 10px;
+      }
+    }
+    .menuBtn {
+      background-color: $background3;
+      padding: 1px;
+      border-radius: 8px;
+      color: $foreground;
+      &:hover {
+        background-color: $background4;
+      }
+    }
+    .fileChooserBtn {
+      button {
+        all: unset;
+        background-color: $background;
+        min-width: 200px;
+        border-radius: 8px;
+        padding: 5px 10px;
+        &:hover {
+          background-color: $background4;
+        }
+      }
+    }
+  }
+  .menu {
+    padding: 10px;
+    // border-color: $background4;
+    border-radius: 10px;
+    background-color: $background;
+
+    .menu_item {
+      all: unset;
+      margin: 5px;
+      padding: 6px;
+      background-color: $background;
+      border-radius: 10px;
+      color: $foreground;
+      &:hover {
+        background-color: $background4;
+      }
+    }
+  }
+  .entry {
+    all: unset;
+    background-color: $background;
+    color: $foreground;
+    border-radius: 8px;
+    padding: 5px;
+    image {
+      margin-left: 10px;
+      color: $background;
+      background-color: $foreground;
+    }
+  }
+
+  .header {
+    button {
+      all: unset;
+      color: $foreground;
+      &:hover {
+        color: $background4;
+      }
+    }
+  }
+  .blue {
+    color: $blue;
+    font-weight: 600;
+    text-shadow: none;
+  }
+  .colorBtn {
+    all: unset;
+    padding: 5px 0;
+    border-radius: 8px;
+    background-color: transparent;
+    colorswatch {
+      border: 1px solid transparent;
+      box-shadow: $box_shadow;
+    }
+    &:hover {
+      colorswatch {
+        box-shadow: 1px 2px 0 $blue;
+      }
+    }
+  }
+}

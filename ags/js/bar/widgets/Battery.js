@@ -1,13 +1,12 @@
-import { Battery} from "../../import.js";
-
+const battery = await Service.import('battery')
   const BatteryPercent = () =>
     Widget.Icon().hook(
-      Battery,
+      battery,
       (self) => {
-        self.class_name = Battery.charging ? "charging" : "";
-        self.icon = Battery.icon_name;
-        self.tooltip_text = Battery.charging ? `Charging: ${Battery.percent}%`: `Battery: ${Battery.percent}%`;
-        self.visible = Battery.available;
+        self.class_name = battery.charging ? "charging" : "";
+        self.icon = battery.icon_name;
+        self.tooltip_text = battery.charging ? `Charging: ${battery.percent}%`: `Battery: ${battery.percent}%`;
+        self.visible = battery.available;
       },
       "changed"
     );

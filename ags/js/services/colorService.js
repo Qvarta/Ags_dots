@@ -1,8 +1,7 @@
 // @ts-nocheck
-import { Service, Utils } from "../import.js";
-import {isInstalled, run_async, run} from "../util/helpers.js";
-
-const MAX_NUM_COLORS = 6;
+import {run, runAsync} from "../util/functions/fileUtils.js";
+import {isInstalled} from "../util/functions/systemUtils.js";
+import options from "../options.js";
 
 class ColorPicker extends Service {
   static {
@@ -15,39 +14,38 @@ class ColorPicker extends Service {
     );
   }
 
-  #colors = [];
+  colors = [];
 
   get colors() {
-    return this.#colors;
+    return this.colors;
   }
-  set colors(colors) {
-    this.#colors = colors;
+  set remove(color) {
+    const colors_list = this.colors.filter(item => item !== color);
+    this.colors = colors_list;
     this.changed("colors");
+  }
+  set to_clipboard(color) {
+    if (!isInstalled("wl-copy")) return;
+    runAsync(`"wl-copy '${color}'"`);
+    Utils.notify({summary:color,body: `Color copied to clipboard`,iconName: "color-picker-symbolic"});
   }
   constructor() {
     super();
   }
-  to_clipboard(color) {
-    if (!isInstalled("wl-copy")) return;
-    run_async(`"wl-copy '${color}'"`);
-    Utils.notify({summary:color,body: `Color copied to clipboard`,iconName: "color-picker-symbolic"});
-  }
+
   pick_color() {
     if (!isInstalled("hyprpicker")) return;
     const color = run('hyprpicker -a');
     const list = this.colors;
     if (!list.includes(color)) {
       list.push(color);
-      if (list.length > MAX_NUM_COLORS) list.shift();
+      if (list.length > options.colors.number) list.shift();
       this.colors = list;
       this.changed("colors");
+    return color;
     }
   }
-  remove_color(color) {
-    const colors_list = this.#colors.filter(item => item !== color);
-    this.#colors = colors_list;
-    this.changed("colors");
-  }
+
 }
 
 export default new ColorPicker();

@@ -10,14 +10,14 @@
       min-width: 120px;
       min-height: 44px;
       color: $foreground;
-      font-weight:600;
-      box-shadow: 2px 2px 2px 0 #0e0e0e;
+      font-weight: 600;
 
       label {
         margin-left: 10px;
       }
 
       button {
+        all: unset;
         border-radius: 8px;
         color: $foreground;
         background-color: $background2;
@@ -26,7 +26,6 @@
 
         &:hover {
           background-color: $background4;
-          // color: darken($foreground, 10%);
         }
 
         &:first-child {
@@ -44,9 +43,11 @@
           margin-left: 2px;
         }
       }
+      .active{
+        background-color: transparentize($color: $background4, $amount: 0.3);
+      }
     }
     .sliders {
-      box-shadow: 2px 2px 2px 0 #0e0e0e;
       background-color: $background2;
       border-radius: 10px;
     }
@@ -63,22 +64,25 @@
       scale {
         all: unset;
         trough {
+          all: unset;
           transition: 200ms;
           border-radius: 10px;
           background-color: $background;
           min-height: 10px;
           min-width: 5px;
-
+  
           highlight,
           progress {
-            background-color: $background6;
+            all: unset;
+            background-color: $blue;
             border-radius: 20px;
             min-height: 5px;
             min-width: 5px;
           }
         }
-
+  
         slider {
+          all: unset;
           box-shadow: none;
           background-color: transparent;
           border: 1px solid transparent;
@@ -88,7 +92,7 @@
           min-width: 12px;
           margin: -4px;
         }
-
+  
         &:hover {
           slider {
             background-color: $foreground;
@@ -96,6 +100,7 @@
         }
       }
       .arrow {
+        all: unset;
         border-radius: 5px;
         &:hover {
           background-color: $background4;
@@ -124,12 +129,13 @@
         }
       }
       .bluetooth-devices {
-        all: unset;
         switch {
-          background-color: $background6;
+          all: unset;
+          background-color: $background2;
           border-radius: 20px;
           margin: 2px 5px;
           slider {
+            all: unset;
             margin: 2px;
             min-width: 20px;
             min-height: 5px;
@@ -137,7 +143,7 @@
             border-radius: 20px;
           }
           image {
-            color: $background6;
+            color: $blue;
           }
           &:hover {
             border-radius: 20px;
@@ -156,6 +162,7 @@
       }
     }
     .volume-indicator {
+      all: unset;
       border-radius: 5px;
       color: $foreground;
       margin: 4px;
@@ -171,72 +178,74 @@
       margin: 0;
       padding: 0;
     }
-    .appearance {
+    .panelBtn {
+      all: unset;
+      border-radius: 8px;
+      min-width: 100px;
+      min-height: 44px;
+      color: $foreground;
       background-color: $background2;
-      box-shadow: 2px 2px 2px 0 #0e0e0e;
-      padding: 10px;
-      border-radius: 10px;
-      .setGlobal {
-        .my-switch {
-          padding: 2px;
-          switch {
-            background-color: $background6;
-            border-radius: 20px;
-            slider {
-              margin: 2px;
-              min-height: 7px;
-              min-width: 15px;
-              background-color: $background2;
-              border-radius: 20px;
-            }
-            &:last-child,
-            &image:nth-child(2) {
-              color: $background6;
-            }
-            &:checked {
-              background-color: $foreground;
-              image {
-                color: $foreground;
-              }
-            }
-          }
+      padding: 0 15px;
+      &:hover {
+        background-color: $background4;
+      }
+      &.active{
+        background-color: transparentize($color: $background4, $amount: 0.3);
+      }
+    }
+    .color_picker {
+      button {
+        all: unset;
+        border-radius: 20px;
+        min-height: 15px;
+        min-width: 15px;
+        margin: 5px 3px 6px 5px;
+        padding: 8px;
+        border: 1px solid $foreground;
+        &:hover {
+          border: 1px solid $blue;
+          box-shadow: 1px 1px 3px 1px $blue;
         }
       }
-      .toggleBtn {
-        border-radius: 8px;
-        box-shadow: 2px 2px 2px 0 #0e0e0e;
-        min-width: 100px;
-        min-height: 44px;
+    }
+    .tytle {
+      label {
         color: $foreground;
-        font-weight: bold;
-        background-color: $background5;
+        font-weight: 300;
+      }
+      .avatar {
+        padding: 5px;
+      }
+      .settingsBtn {
+        all: unset;
+        margin: 0 10px;
+        background-color: transparent;
+        color: $foreground;
+        &:hover {
+          color: $background4;
+        }
+      }
+    }
+    .radio {
+      background-color: $background2;
+      color: $foreground;
+      border-radius: 10px;
+      padding: 10px;
+      button {
+        border-radius: 8px;
+        min-width: 100px;
+        min-height: 40px;
+        color: $background;
+        font-weight: 300;
+        background-color: $foreground;
         padding: 0 10px;
         &:hover {
           background-color: $background4;
         }
-      }
-      .color_picker {
-        .pickerBtn {
-          border-radius: 10px;
-          min-width: 15px;
-          padding: 8px;
-          color: $foreground;
-          background-color: $background5;
-          box-shadow: 2px 2px 2px 0 #0e0e0e;
-          &:hover {
-            background-color: $background4;
-          }
+        &.active {
+          color: whitesmoke;
+          background-color: $blue;
         }
-        .colorBtn {
-          border: 1px solid $foreground;
-        }
-        .colorBtn:hover {
-          box-shadow: $box_shadow;
-        }
-      }
-      label {
-        color: $foreground;
-        font-weight:300;
       }
     }
   }

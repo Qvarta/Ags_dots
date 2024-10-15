@@ -1,60 +1,63 @@
 .media {
   color: $foreground;
   .player {
+    min-height: 120px;
     background-color: $background2;
-    box-shadow: 2px 2px 2px 0 #0e0e0e;
-    border-radius:10px;
-    padding: 6px;
+    border-radius: 10px;
     .controls {
-      padding: 0 10px;
+      border-radius: 10px 10px 0 0 ;
+      background-color: transparentize($background, $amount: 0.2);
+      padding: 15px 20px 0 0;
     }
     .cover {
-      box-shadow: 2px 2px 2px 0 #0e0e0e;
+      box-shadow: 2px 2px 2px 0 $yellow;
       background-size: cover;
       background-position: center;
       border-radius: 10px;
-      margin: 10px 15px 10px 10px;
+      margin: 0 20px 20px 10px;
+      background-color: $background;
     }
-    .title {
+    .artist{
       color: $foreground;
-      font-size: 22px;
+      font-size: 20px;
+      font-weight: 600;
     }
-    .artist {
+    .title{
       color: $foreground;
       font-size: 18px;
     }
-    .position,.length{
+    .position,
+    .length {
       font-size: 14px;
     }
     .playerBtn {
+      all: unset;
       margin: 10px 5px;
       border-radius: 8px;
       padding: 8px;
       &:hover {
-        background-color: $hover1;
-        box-shadow: 2px 2px 2px 0 #0e0e0e;
+        background-color: $background4;
       }
     }
     scale {
       all: unset;
-      margin-top: 10px;
-  
+      border-radius:10px  ;
+      margin-top: -8px;
       trough {
         transition: 200ms;
-        border-radius: 10px;
-        background-color: $background;
-        min-height:6px;
+        border-radius: 0 0 10px 10px  ;
+        background-color: transparent;
+        min-height: 6px;
         min-width: 5px;
-  
+
         highlight,
         progress {
-          background-color: $background6;
-          border-radius: 20px;
-          min-height: 5px;
+          border-radius: 0 0 0 10px  ;
+          min-height: 8px;
           min-width: 5px;
         }
       }
-  
+
       slider {
         box-shadow: none;
         background-color: transparent;
@@ -65,7 +68,7 @@
         min-width: 10px;
         margin: -4px;
       }
-  
+
       &:hover {
         slider {
           background-color: $foreground;

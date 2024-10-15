@@ -1,4 +1,4 @@
-import { Audio } from "../../import.js";
+const audio = await Service.import('audio')
 
 export default () =>
   Widget.Button({
@@ -7,20 +7,20 @@ export default () =>
       App.toggleWindow("control_panel");
     },
     onSecondaryClick: () => {
-      Audio.speaker.isMuted = !Audio.speaker.isMuted;
+      audio.speaker.isMuted = !audio.speaker.isMuted;
     },
     onScrollUp: () => {
-      Audio.speaker.volume += 0.05;
+      audio.speaker.volume += 0.05;
     },
     onScrollDown: () => {
-      Audio.speaker.volume -= 0.05;
+      audio.speaker.volume -= 0.05;
     },
     child: Widget.Box({
       vpack: "fill",
       children: [
-        Widget.Icon().hook(Audio.speaker, (self) => {
-          const vol = Audio.speaker.volume * 100;
-          let isMuted = Audio.speaker.isMuted;
+        Widget.Icon().hook(audio.speaker, (self) => {
+          const vol = audio.speaker.volume * 100;
+          let isMuted = audio.speaker.isMuted;
           const icon = [
             [101, "overamplified"],
             [67, "high"],

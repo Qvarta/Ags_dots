@@ -1,9 +1,8 @@
-import { Widget, Variable } from "../import.js";
 import weather from "../services/weatherService.js";
 import options from "../options.js";
+import icons from "../util/icons.js";
 
 export const dayNumber = Variable("Day0");
-
 
 const updates = () =>
   Widget.Box({
@@ -60,13 +59,19 @@ const tempMax = (number) =>
           ]?.Temperature?.Maximum?.Value.toFixed(0)}°C`
       ),
   });
-const tempMin = (number) =>
+const tempMin = (number, daytime) =>
   Widget.Box({
     spacing: 10,
     class_name: "smallContainer",
     children: [
-      Widget.Icon("weather-clear-night-symbolic"),
+      Widget.Icon({
+      icon: weather
+        .bind("weather_data")
+        .as((data) => data?.DailyForecasts?.[number]?.[daytime]?.Icon)
+        .transform((number) => `${icons.weather[number]}`),
+      }),
       Widget.Label({
+        hexpand: true,
         label: weather
           .bind("weather_data")
           .transform(
@@ -98,7 +103,7 @@ const precip = (number, daytime) =>
     children: [
       Widget.Icon("weather-showers-scattered-symbolic"),
       Widget.Label({
-        hpack: "start",
+        hexpand: true,
         label: weather
           .bind("weather_data")
           .transform(
@@ -126,6 +131,7 @@ const windSpeed = (number, daytime) =>
           .transform((speed) => parseFloat(speed))
           .transform((speed) => ((speed * 1000) / 3600).toFixed(0).toString())
           .transform((speed) => `${speed}м/с`),
+        hexpand: true,
       }),
     ],
   });
@@ -134,7 +140,7 @@ const windDirection = (number, daytime) =>
     spacing: 10,
     class_name: "smallContainer",
     children: [
-      Widget.Icon("window-pop-out-symbolic"),
+      Widget.Icon("network-receive-symbolic-rtl"),
       Widget.Label({
         label: weather
           .bind("weather_data")
@@ -142,6 +148,7 @@ const windDirection = (number, daytime) =>
             (data) =>
               `${data?.DailyForecasts?.[number]?.[daytime]?.Wind?.Direction?.Localized}`
           ),
+        hexpand: true,
       }),
     ],
   });
@@ -155,9 +162,7 @@ const forecastDay = (number, daytime) =>
         (data) => `${data?.DailyForecasts?.[number]?.[daytime]?.IconPhrase}`
       ),
     on_clicked: () => {
-      // dayNumber.value = number;
       dayNumber.value = `Day${number}`;
-      console.log(dayNumber.value);
     },
     child: Widget.Box({
       vertical: true,
@@ -201,7 +206,7 @@ const currentDay = (number, daytime) =>
           Widget.Box({
             hpack: "start",
             spacing: 5,
-            children: [precip(number, daytime), tempMin(number)],
+            children: [precip(number, daytime), tempMin(number, "Night")],
           }),
           Widget.Box({
             hpack: "start",

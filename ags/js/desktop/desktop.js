@@ -1,52 +1,51 @@
-import { Widget, Mpris } from "../import.js";
 import { DayForecast } from "../weather/weatherWidget.js";
-import { time } from "../util/helpers.js";
-import { getTimezone, cpuval, ramval } from "../util/helpers.js";
+import { time, cpuval, ramval } from "../util/functions/variableUtils.js";
+import { getTimezone} from "../util/functions/systemUtils.js";
 import options from "../options.js";
+import CavaWidget from "../cava/cava.js";
 
 const WINDOW_NAME = "desktop";
-const players = Mpris.bind("players");
+const mpris = await Service.import('mpris')
+const players = mpris.bind("players");
 
 const NowPlaying = (player) =>
   Widget.Box({
     class_name: "nowPlaying",
     hexpand: true,
     vertical: true,
-    setup: (self) => {
-    //  console.log(player.bind().as((res) => {return res}))
-    },
     spacing: 5,
     children: [
       Widget.Box({
         spacing: 10,
-        visible: player.bind("track_artists").as((a) => a[0].length > 0),
         children: [
-          Widget.Icon({
-            icon: "avatar-default-symbolic",
-            class_name: "player_icon",
-          }),
-          Widget.Label({
-            hpack: "start",
-            class_name: "artist",
-            max_width_chars: 30,
-            truncate: "end",
-            label: player.bind("track_artists").as((a) => a.join(", ")),
-          }),
+          Widget.Icon({icon:"audio-headphones-symbolic", class_name: "player_icon", vexpand: true}),
+          Widget.Box({
+            vertical: true,
+            children: [
+              Widget.Label({
+                visible: player.bind("track_artists").as((a) => a[0].length > 0 && a[0] !== "Unknown artist"),
+                hpack: "start",
+                class_name: "track_artist",
+                max_width_chars: 30,
+                truncate: "end",
+                vpack: "center",
+                label: player.bind("track_artists").as((a) => a.join(", ")),
+              }),
+              Widget.Label({
+                class_name: "track_title",
+                hpack: "start",
+                max_width_chars: 30,
+                truncate: "end",
+                vpack: "center",
+                vexpand: true,
+                label: player.bind("track_title"),
+              }),
+            ]
+          })
+
         ],
       }),
-      Widget.Box({
-        spacing: 10,
-        children: [
-          Widget.Icon({icon:"audio-headphones-symbolic", class_name: "player_icon"}),
-          Widget.Label({
-            class_name: "track_title",
-            hpack: "start",
-            max_width_chars: 30,
-            truncate: "end",
-            label: player.bind("track_title"),
-          }),
-        ],
-      }),
+      CavaWidget(),
     ],
   });
 const TimeNow = () => Widget.Box({
@@ -139,6 +138,7 @@ const DesktopWidget = () => Widget.Box({
 export default () =>
   Widget.Window({
     name: WINDOW_NAME,
+    css:'background-color: transparent;',
     anchor: ["top", "left"],
     exclusivity: "normal",
     keymode: "on-demand",

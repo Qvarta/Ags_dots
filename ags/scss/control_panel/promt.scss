@@ -6,12 +6,13 @@
   min-width: 250px;
   margin: 10px;
   entry {
+    all:unset;
     margin: 10px;
     padding: 10px;
     border-radius: 10px;
     color: $foreground;
     font-size: 16px;
-    background-color: $background6;
+    background-color: $background3;
     image {
       color: $foreground;
       margin:0 20px 0 10px;

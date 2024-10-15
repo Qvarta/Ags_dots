@@ -1,9 +1,7 @@
 // @ts-nocheck
-
-import { Service, Utils} from "../import.js";
-import {isNetwork, get_updates, get_package_info} from "../util/helpers.js";
-
-class CheckUpadesService extends Service {
+import {isNetwork} from "../util/functions/systemUtils.js";
+import { getUpdates,getPackageInfo } from "../util/functions/updatesUtils.js";
+class UpadesService extends Service {
   static {
     Service.register(
       this,
@@ -26,7 +24,7 @@ class CheckUpadesService extends Service {
     this.changed("description");
   }
   set info (package_name) {
-    get_package_info(package_name).then((result) => {
+    getPackageInfo(package_name).then((result) => {
       const { name, size, description } = JSON.parse(result);
       this.updateProperty("name", name);
       this.updateProperty("size", size);
@@ -47,18 +45,20 @@ class CheckUpadesService extends Service {
   }
   constructor() {
     super();
-    Utils.interval(7200000, this._getUpdates.bind(this));
+    this._getUpdates();
   }
   _getUpdates() {
     Utils.timeout(5000, () => {
-      if (!isNetwork("updates")) return;
-      get_updates().then((json) => {
+      if (!isNetwork("Update Service")) return;
+      getUpdates().then((json) => {
         this._updates = JSON.parse(json);
         this.changed("updates");
-        // console.log(this._updates);
       }).catch((error) => {console.error(error)});
     })
   }
+  _update() {
+    Utils.execAsync(["sh", "-c", "kitty -e sudo dnf update"]).catch((error) => console.error(error));
+  }
 }
 
-export default new CheckUpadesService();
+export default new UpadesService();

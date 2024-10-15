@@ -1,4 +1,4 @@
-import { distro } from "../../util/helpers.js";
+import { distro } from "../../util/functions/variableUtils.js";
 
   export default () =>
     Widget.Button({

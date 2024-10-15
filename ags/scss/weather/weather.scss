@@ -8,6 +8,8 @@
   box-shadow: $box_shadow;
 
   .weatherBtn {
+    all: unset;
+    background-color: transparent;
     &:hover {
       background-color: $background4;
       border-radius: 10px;
@@ -15,6 +17,7 @@
   }
 }
 .dayForecast {
+  all: unset;
   .smallContainer {
     padding: 6px;
     min-width: 75px;
@@ -22,7 +25,6 @@
     border-radius: 6px;
     color: $background;
     image {
-      // padding: 6px;
       font-size: 18px;
     }
     label {
@@ -39,30 +41,21 @@
   padding: 10px;
   border-radius: 10px;
   color: $foreground;
+  min-width: 300px;
   background-color: $background;
   box-shadow: $box_shadow;
   .weatherOptions {
     background-color: $background2;
-    box-shadow: 2px 2px 2px 0 #0e0e0e;
     padding: 10px;
     border-radius: 10px;
     label {
       min-width: 60px;
     }
-    entry {
-      min-width: 250px;
-      background-color: $background6;
-      color: $foreground;
-      border-radius: 8px;
-      padding: 5px;
-      image {
-        margin: 0 10px;
-      }
-    }
   }
   .saveBtn {
-    background-color: $background5;
-    box-shadow: 2px 2px 2px 0 #0e0e0e;
+    all: unset;
+
+    background-color: $background2;
     min-width: 100px;
     border-radius: 8px;
     padding: 5px;
@@ -77,10 +70,25 @@
     padding: 10px;
     border-radius: 10px;
     background-color: $background2;
-    box-shadow: 2px 2px 2px 0 #0e0e0e;
     min-height: 200px;
+    trough {
+      all: unset;
+
+      border-radius: 10px;
+      background-color: transparent;
+      slider {
+        all: unset;
+
+        min-width: 10px;
+        border-radius: 10px;
+        background-color: $foreground;
+      }
+    }
     button {
-      padding: 5px;
+      all: unset;
+      color: $foreground;
+      padding: 10px;
+      background-color: transparent;
       margin: 5px;
       border-radius: 10px;
       &:hover {
@@ -93,6 +101,17 @@
     .cityName {
       font-size: 16px;
       font-weight: bold;
+    }
+  }
+  .searchEntry {
+    all: unset;
+    min-width: 250px;
+    background-color: $background2;
+    color: $foreground;
+    border-radius: 8px;
+    padding: 5px;
+    image {
+      margin: 0 10px;
     }
   }
 }

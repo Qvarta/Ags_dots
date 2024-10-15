@@ -1,4 +1,3 @@
-import { App } from "../../import.js";
 import icons from "../../options.js";
 import Weather from "../../services/weatherService.js";
 import {dayNumber} from "../../weather/weatherWidget.js";
@@ -10,8 +9,8 @@ export default () =>
     children: [
       Widget.Button({
         visible: Weather.bind("status"),
-        on_primary_click: () => {dayNumber.value = "Day0"; App.toggleWindow("weather")},
-        on_secondary_click: () => App.toggleWindow("optionsW"),
+        on_primary_click: () => {dayNumber.value = "Day0"; App.toggleWindow("weather"); App.closeWindow("findArea")},
+        on_secondary_click: () => {App.toggleWindow("findArea"); App.closeWindow("weather")},
         className: "weather",
         cursor: "pointer",
         child: Widget.Box({
@@ -48,7 +47,7 @@ export default () =>
       Widget.Button({
         className: "weather",
         visible: Weather.bind("status").as((result) => !result),
-        onClicked: () => App.toggleWindow("optionsW"),
+        onClicked: () => App.toggleWindow("findArea"),
         child: Widget.Label({
           label: `Recieving weather ...`,
         })

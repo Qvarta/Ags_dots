@@ -1,7 +1,6 @@
 import icons from "../util/icons.js";
-import { App, Widget } from "../import.js";
 import options from "../options.js";
-import PopupWindow from "../util/PopupWindow.js";
+import PopupWindow from "../util/Widgets/PopupWindow.js";
 
 const WINDOW_NAME = "powermenu";
 
@@ -27,6 +26,7 @@ const PowerMenuButton = (action) =>
 export default () =>
   PopupWindow({
     name: WINDOW_NAME,
+    css:'background-color: transparent;',
     layer: "overlay",
     child: Widget.Box({
       className: "screenMenu",

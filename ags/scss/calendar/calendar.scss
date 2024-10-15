@@ -1,23 +1,22 @@
-
 calendar {
+  all: unset;
   background-color: $background;
-  box-shadow: none;
   color: $foreground;
   border-radius: 10px;
   font-size: 1em;
   font-weight: bold;
-  padding: 0.5em;
+  padding: 0 10px;
+  box-shadow: none;
   &.header {
     border: none;
     box-shadow: none;
-    background-color: $background2;
+    background-color: $background;
   }
   &:selected {
-    color: $red;
-  }
-  &.button {
-    background-color: transparent;
-    margin-top: 20px;
+    color: $background2;
+    background-color: $foreground;
+    border-radius: 6px;
+    box-shadow: $box_shadow;
   }
   &:indeterminate {
     color: transparentize($foreground, 0.8);

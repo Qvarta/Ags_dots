@@ -1,7 +1,6 @@
 .notification_widget {
+  all:unset;
   border-radius: 10px;
-  background-color: $background2;
-  box-shadow: 2px 2px 2px 0 #0e0e0e;
   color: $foreground;
   padding: 4px;
   .notify_center {
@@ -13,24 +12,29 @@
       .notification {
         all: unset;
         border-radius: 10px;
-        background-color: $background;
+        background-color: $foreground;
         padding: 5px;
         margin: 5px;
-        // box-shadow: $box_shadow;
-        color: $foreground;
+        color: $background;
         .description {
           min-width: 0px;
+        }
+        label{
+          color: $background;
+          text-shadow: none;
         }
       }
     }
   }
   .header {
+    margin-top: -15px;
     button {
+      all:unset;
       padding: 6px;
       border-radius:10px;
       &:hover {
-        // box-shadow: $box_shadow;
         background-color: $background4;
+        color: $foreground;
       }
     }
     icon {

@@ -6,7 +6,8 @@
     background-color: $background;
     border-radius: 10px;
     entry {
-      background-color: $background6;
+      all: unset;
+      background-color: $background2;
       border-radius: 20px;
       margin: 10px 20px;
       padding: 5px;
@@ -19,17 +20,18 @@
       min-width: 250px;
       min-height: 280px;
       margin: 10px;
-      // trough {
-      //   border-radius: 10px;
-      //   background-color: $background2;
-      //   slider {
-      //     min-width: 10px;
-      //     border-radius: 10px;
-      //     background-color: $foreground;
-      //   }
-      // }
+      trough {
+        border-radius: 10px;
+        background-color: transparent;
+        slider {
+          min-width: 10px;
+          border-radius: 10px;
+          background-color: $foreground;
+        }
+      }
     }
     .app_item {
+      all: unset;
       border: $border;
       border-radius: 10px;
       border-color: transparent;

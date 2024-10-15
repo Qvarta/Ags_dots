@@ -1,7 +1,8 @@
-import { Hyprland, Widget } from "../../import.js";
+const hyprland = await Service.import('hyprland')
+import settings from "../../services/settingsServise.js";
 
-const ws = 7;
-const dispatch = (ws) => Hyprland.messageAsync(`dispatch workspace ${ws}`);
+
+const dispatch = (ws) => hyprland.messageAsync(`dispatch workspace ${ws}`);
 
 const Workspaces = (ws) =>
   Widget.Box({
@@ -11,10 +12,14 @@ const Workspaces = (ws) =>
         attribute: i,
         vpack: "center",
         onClicked: () => dispatch(i),
+        child: Widget.Label({
+          css: "font-size: 10px;",
+          label: i.toString(),
+        }),
         setup: (self) =>
-          self.hook(Hyprland, () => {
-            self.toggleClassName("active", Hyprland.active.workspace.id === i);
-            self.toggleClassName("occupied",(Hyprland.getWorkspace(i)?.windows || 0) > 0);
+          self.hook(hyprland, () => {
+            self.toggleClassName("active", hyprland.active.workspace.id === i);
+            self.toggleClassName("occupied",(hyprland.getWorkspace(i)?.windows || 0) > 0);
           }),
       })
     ),
@@ -23,5 +28,9 @@ export default () =>
   Widget.EventBox({
     onScrollUp: () => dispatch("+1"),
     onScrollDown: () => dispatch("-1"),
-    child: Workspaces(ws),
+    setup: (self) => {
+      self.hook(settings, () => {
+        self.child = Workspaces(settings.settings.workspasesNumber);
+      });
+    },
   });

@@ -1,10 +1,10 @@
-import { Widget, Mpris } from "../../import.js";
 import icons from "../../util/icons.js";
-
-const players = Mpris.bind("players");
+import options from "../../options.js";
+const mpris = await Service.import("mpris");
+const players = mpris.bind("players");
 
 function lengthStr(length) {
-  if (length >10000) return "-- : --";
+  if (length > 10000) return "-- : --";
   const min = Math.floor(length / 60);
   const sec = Math.floor(length % 60);
   const sec0 = sec < 10 ? "0" : "";
@@ -14,30 +14,43 @@ function lengthStr(length) {
 const Player = (player) => {
   const cover = Widget.Box({
     class_name: "cover",
-    vpack: "start",
-    css: player.bind("cover_path").as(
-      (path) => `
-            min-width: 80px;
-            min-height: 80px;
-            background-image: url('${path}');
-        `
-    ),
+    // vpack: "start",
+    css: player
+      .bind("cover_path")
+      .as((path) => {
+        if (path === undefined) {
+          return options.paths.cover;
+        } else {
+          return path;
+        }
+      })
+      .as(
+        (path) => `
+        min-width: 90px;
+        min-height: 90px;
+        background-image: url('${path}');
+      `
+      ),
   });
 
   const title = Widget.Label({
     class_name: "title",
     max_width_chars: 30,
     truncate: "end",
-    hpack: "start",
+    vexpand: true,
+    vpack: "center",
     label: player.bind("track_title"),
   });
 
   const artist = Widget.Label({
-    visible: player.bind("track_artists").as((a) => a[0].length > 0),
+    visible: player
+      .bind("track_artists")
+      .as((a) => a[0].length > 0 && a[0] !== "Unknown artist"),
     class_name: "artist",
+    vpack: "center",
     max_width_chars: 30,
     truncate: "end",
-    hpack: "start",
+    // hpack: "start",
     label: player.bind("track_artists").as((a) => a.join(", ")),
   });
 
@@ -73,6 +86,7 @@ const Player = (player) => {
   const lengthLabel = Widget.Label({
     class_name: "length",
     hpack: "end",
+    visible: player.bind("length").as((l) => l > 0),
     label: player.bind("length").as(lengthStr),
   });
 
@@ -98,7 +112,7 @@ const Player = (player) => {
     class_name: "playerBtn",
     on_clicked: () => player.previous(),
     visible: player.bind("can_go_prev"),
-    child: Widget.Icon({size: 15,icon: icons.mpris.prev,}),
+    child: Widget.Icon({ size: 15, icon: icons.mpris.prev }),
   });
 
   const next = Widget.Button({
@@ -110,34 +124,55 @@ const Player = (player) => {
 
   return Widget.Box({
     class_name: "player",
+    visible: player.bind("trackid").as((path) => {
+      const path1 = path.toString().split("/").pop().trim();
+      if (path1 === "NoTrack") return false;
+      return true;
+    }),
+    css: player.bind("cover_path").as(
+      (path) => `
+        background-image: url('${path}');
+        background-size: cover;
+        background-position: center;
+        
+      `
+    ),
     vexpand: false,
     hexpand: true,
+    vertical: true,
     children: [
-      cover,
       Widget.Box({
         class_name: "controls",
-        vertical: true,
-        hexpand: true,
         children: [
-          title,
-          artist,
-          Widget.Box({ vexpand: true }),
-          positionSlider,
-          Widget.CenterBox({
-            start_widget: positionLabel,
-            center_widget: Widget.Box([prev, playPause, next]),
-            end_widget: lengthLabel,
+          cover,
+          Widget.Box({
+            vertical: true,
+            hexpand: true,
+            children: [
+              artist,
+              title,
+              Widget.CenterBox({
+                start_widget: positionLabel,
+                center_widget: Widget.Box([prev, playPause, next]),
+                end_widget: lengthLabel,
+              }),
+            ],
           }),
         ],
       }),
+      positionSlider,
     ],
   });
 };
 
-export const Media = () =>
+export default () =>
   Widget.Box({
+    visible: false,
     vertical: true,
     class_name: "media",
     spacing: 10,
-    children: players.as((p) => p.map(Player)),
+    // I use vlc for online radio
+    children: players.as((p) =>
+      p.filter((player) => player.name !== "vlc").map(Player)
+    ),
   });

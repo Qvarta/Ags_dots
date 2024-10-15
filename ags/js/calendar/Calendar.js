@@ -1,4 +1,4 @@
-import PopupWindow from "../util/PopupWindow.js";
+import PopupWindow from "../util/Widgets/PopupWindow.js";
 
 const WINDOW_NAME = "calendar";
 
@@ -6,6 +6,7 @@ export default () =>
   PopupWindow({
     name: WINDOW_NAME,
     transition: "slide_down",
+    css:'background-color: transparent;',
     location: "top",
     layer: "overlay",
     child: Widget.Calendar({

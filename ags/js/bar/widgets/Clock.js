@@ -1,4 +1,4 @@
-import { time } from "../../util/helpers.js";
+import { time} from "../../util/functions/variableUtils.js";
 const ClockLabel = ({ format = "%H:%M", ...props } = {}) =>
   Widget.Label({
     className: "clock",
@@ -11,9 +11,9 @@ export default () =>
   Widget.Button({
     className: "clockBtn",
     cursor: "pointer",
-    onClicked: () => {
+    onPrimaryClick: () => {
       App.toggleWindow("calendar");
     },
+    onSecondaryClick: () => {},
     child: ClockLabel(),
   });
-  

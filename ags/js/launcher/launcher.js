@@ -1,7 +1,7 @@
 const Applications = await Service.import("applications");
 import options from "../options.js";
-import { Widget } from "../import.js";
-import PopupWindow from "../util/PopupWindow.js";
+import settings from "../services/settingsServise.js";
+import PopupWindow from "../util/Widgets/PopupWindow.js";
 import icons from "../util/icons.js";
 
 const WINDOW_NAME = "launcher";
@@ -15,7 +15,7 @@ const AppItem = (app) =>
       app.launch();
       ++app.frequency;
     },
-    setup: (self) => (self.app = app),
+    setup: (self) => self.app = app,
     child: Widget.Box({
       children: [
         Widget.Icon({
@@ -81,10 +81,13 @@ export default () =>
   PopupWindow({
     name: WINDOW_NAME,
     transition: "slide_down",
+    css:'background-color: transparent;',
     anchor: ["top", "left"],
-    margins: [0,(options.screen.width - options.bar.width)/2],
     child: Launcher(),
     setup: (self) => {
+      self.hook(settings, () => {
+        self.margins = [0,(options.screen.width - settings.settings.barSize) / 2 ,];
+      })
       self.keybind("Escape", () => App.closeWindow(WINDOW_NAME));
     },
   });
