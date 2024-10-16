@@ -82,8 +82,8 @@ class WeatherService extends Service {
     this._key = initialConfig.apiKey;
     this._lang = initialConfig.language;
     this._code = initialConfig.cityCode;
-    // Utils.interval(3600000, this._newWeather.bind(this));
-    this._oldWeather();
+    Utils.interval(3600000, this._newWeather.bind(this));
+    // this._oldWeather();
   }
   _newWeather() {
     this.updateProperty("status", false)
