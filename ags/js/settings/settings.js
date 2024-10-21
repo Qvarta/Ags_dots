@@ -59,7 +59,6 @@ const Footer = () =>
       Widget.Button({
         class_name: "saveBtn",
         onPrimaryClick: () => {
-          App.closeWindow("settings");
           settings.save();
           setTimeout(function() {
             themes.changeTheme();
@@ -94,6 +93,7 @@ export default () =>
     css: "background-color: transparent;",
     exclusivity: "normal",
     keymode: "on-demand",
+    anchor: ['top'],
     // visible: settings.bind('settings').transform((n) => n.showOnStart),
     visible: false,
     layer: "overlay",

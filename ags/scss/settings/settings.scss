@@ -27,7 +27,6 @@
         padding: 5px;
       }
     }
-
     .sliderContainer {
       scale {
         all: unset;
@@ -134,6 +133,14 @@
       }
     }
   }
+  .footer {
+    button {
+      color: $foreground;
+      &:hover {
+        background-color: $background4;
+      }
+    }
+  }
   .blue {
     color: $blue;
     font-weight: 600;
@@ -141,8 +148,7 @@
   }
   .colorBtn {
     all: unset;
-    padding: 5px 0;
-    border-radius: 8px;
+    padding: 5px 20px;
     background-color: transparent;
     colorswatch {
       border: 1px solid transparent;

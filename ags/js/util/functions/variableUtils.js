@@ -1,5 +1,5 @@
 import GLib from "gi://GLib";
-import { getUpTime} from "./systemUtils.js";
+import { getUpTime, isVPN} from "./systemUtils.js";
 import options from "../../options.js";
 
 export const scss = `${App.configDir}/style.scss`;
@@ -47,7 +47,9 @@ export const upTime = Variable(0, {
 export const time = Variable(GLib.DateTime.new_now_local(), {
   poll: [5000, () => GLib.DateTime.new_now_local()],
 });
-
+export const wireguard = Variable(false, {
+  poll: [3000, () => isVPN()],
+});
 export const user = {
   name: GLib.get_user_name(),
   data: GLib.get_user_data_dir(),

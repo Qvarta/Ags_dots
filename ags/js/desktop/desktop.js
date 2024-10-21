@@ -3,6 +3,7 @@ import { time, cpuval, ramval } from "../util/functions/variableUtils.js";
 import { getTimezone} from "../util/functions/systemUtils.js";
 import options from "../options.js";
 import CavaWidget from "../cava/cava.js";
+import radio from "../services/radioService.js";
 
 const WINDOW_NAME = "desktop";
 const mpris = await Service.import('mpris')
@@ -38,7 +39,7 @@ const NowPlaying = (player) =>
                 truncate: "end",
                 vpack: "center",
                 vexpand: true,
-                label: player.bind("track_title"),
+                label: player.name === "vlc" ? radio.bind("station") : player.bind("track_title"),
               }),
             ]
           })
@@ -47,6 +48,14 @@ const NowPlaying = (player) =>
       }),
       CavaWidget(),
     ],
+  }).hook(mpris, self => {
+    let status = false;
+    if (player.name != "vlc") {
+      status = player["play-back-status"] === "Playing";
+    }else{
+      status = radio.bind().emitter.enabled;
+    }
+    self.visible = status;
   });
 const TimeNow = () => Widget.Box({
     class_name: "timeNow",
@@ -56,13 +65,11 @@ const TimeNow = () => Widget.Box({
       Widget.Label({
         className: "time_digit",
         vexpand: true,
-        // hexpand: true,
         label: time.bind().transform((t) => t.format("%H:%M") || "wrong format"),
       }),
       Widget.Label({
         vpack:"end",
         className: "zone_text",
-        // hexpand: true,
         label: getTimezone(),
       }),
     ]
@@ -118,7 +125,7 @@ const SystemInfo = () => Widget.Box({
 const DesktopWidget = () => Widget.Box({
   vertical: true,
   class_name: "desktopWindow",
-  spacing: 5,
+  // spacing: 5,
   children: [
     Widget.Box({
         children: [

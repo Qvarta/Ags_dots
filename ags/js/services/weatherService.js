@@ -46,7 +46,6 @@ class WeatherService extends Service {
   get status() {
     return this._status;
   }
-
   set area(city) {
     const encodedCity = encodeURIComponent(city);
     const command = `curl -s 'http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${this._key}&q=${encodedCity}&language=${this._lang}'`;
@@ -73,6 +72,7 @@ class WeatherService extends Service {
     data.apiKey = this._key;
     data.language = this._lang;
     const jsonData = JSON.stringify(data);
+    print (jsonData);
     Utils.writeFile(jsonData, options.paths.settings).catch(err => print(err));
     this._newWeather();
   }

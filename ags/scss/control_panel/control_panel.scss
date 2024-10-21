@@ -188,6 +188,7 @@
       padding: 0 15px;
       &:hover {
         background-color: $background4;
+        // box-shadow: 1px 1px 1px $background, -1px -1px 1px $foreground inset;
       }
       &.active{
         background-color: transparentize($color: $background4, $amount: 0.3);

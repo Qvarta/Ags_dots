@@ -24,7 +24,7 @@ const RadioMenu = () => {
           onActivate: (self) => {
             label.label = self.label;
             radio.station = [station.name, station.url];
-            radio.toggleService();
+            radio.playStation();
           },
         })
       )
@@ -38,7 +38,6 @@ const RadioMenu = () => {
         setup: (self) =>
           self.hook(radio, () => {
             self.toggleClassName("active", radio.enabled === true);
-            // console.log(self.class_name);
           }),
         onPrimaryClick: () =>  radio.toggleService(),
       }),

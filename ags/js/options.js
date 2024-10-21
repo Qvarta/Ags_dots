@@ -37,6 +37,10 @@ export default {
     image: `${App.configDir}/assets/qvarta.png`,
     size:35,
   },
+  vpn:{
+    icon: `${App.configDir}/assets/vpn.png`,
+    size: 18,
+  },
   colors:{
     number: 8,
   }

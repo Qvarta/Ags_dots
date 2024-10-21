@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { fileExists } from "../util/functions/fileUtils.js";
-import { isInstalled, isNetwork, isProcessRunning, getVlcUrl} from "../util/functions/systemUtils.js";
+import { isInstalled, isNetwork, isProcessRunning} from "../util/functions/systemUtils.js";
 import { initialConfig } from "../util/functions/variableUtils.js";
 import options from "../options.js";
 class Radio extends Service {
@@ -44,12 +44,6 @@ class Radio extends Service {
     super();
     this._enabled = isProcessRunning("vlc");
     this._jsonPath = initialConfig.radioJSON;
-    exitIf: if (this._enabled) {
-      if (!fileExists(this._jsonPath)) break exitIf;
-      const url = getVlcUrl();
-      const jsonData = JSON.parse(Utils.readFile(this._jsonPath));
-      this._station = jsonData.find(item => item.url === url)?.name;
-    }
     this.enableService();
   }
   enableService() {
@@ -65,11 +59,15 @@ class Radio extends Service {
       this._enabled = false;
       this.changed("enabled");
     }else{
-      if (this._url === "") return;
-      Utils.execAsync(['bash', '-c', `cvlc ${this._url} &`]);
-      this._enabled = true;
-      this.changed("enabled");
+     this.playStation();
     };
+  }
+  playStation() {
+    if(isProcessRunning("vlc")) Utils.exec("pkill vlc");
+    if (this._url === "") return;
+    Utils.execAsync(['bash', '-c', `cvlc ${this._url} &`]);
+    this._enabled = true;
+    this.changed("enabled");
   }
 }
 

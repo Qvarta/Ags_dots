@@ -108,7 +108,7 @@ const Cava = ({
 
 
 let CavaWidget;
-if (exec("which cava") != "") CavaWidget = () => Cava({}); // передать пустой объект
+if (exec("which cava") != "") CavaWidget = () => Cava({});
 else {
   console.warn("cava is not installed. Cava module has been disabled.");
   CavaWidget = () => Widget.Box();

@@ -70,5 +70,13 @@
   {
     "name": "Radio WIT",
     "url": "http://wit90s.ice.infomaniak.ch/wit90s.mp3"
+  },
+  {
+    "name": "Радио Maximum",
+    "url": "http://maximum.hostingradio.ru/maximum128.mp3"
+  },
+  {
+    "name": "Радио DFM",
+    "url": "http://dfm.hostingradio.ru/dfm128.mp3"
   }
 ]

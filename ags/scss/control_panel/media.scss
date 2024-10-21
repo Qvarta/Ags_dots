@@ -10,7 +10,7 @@
       padding: 15px 20px 0 0;
     }
     .cover {
-      box-shadow: 2px 2px 2px 0 $yellow;
+      box-shadow: 2px 2px 2px 0 $foreground;
       background-size: cover;
       background-position: center;
       border-radius: 10px;
@@ -57,22 +57,9 @@
           min-width: 5px;
         }
       }
-
       slider {
-        box-shadow: none;
-        background-color: transparent;
-        border: 1px solid transparent;
-        transition: 200ms;
-        border-radius: 10px;
-        min-height: 10px;
-        min-width: 10px;
-        margin: -4px;
-      }
-
-      &:hover {
-        slider {
-          background-color: $foreground;
-        }
+        min-height: 3px;
+        min-width: 3px;
       }
     }
   }

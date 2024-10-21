@@ -1,11 +1,10 @@
 @import "themes/colorsLight.scss";
 
-$shadow_color: #8e9cd3;
-
 $hover: darken($background, 5%);
 
 $background2: darken($background, 10%);
 $background3:transparentize($color: $background, $amount: 0.5);
 $background4: darken($hover, 30%);
 
-$box_shadow: 2px 2px 2px 0 $shadow_color;
+// $box_shadow: 2px 2px 2px 0 $shadow_color;
+$box_shadow: 0px 0px 2px $foreground, 0px 0px 2px $background inset;

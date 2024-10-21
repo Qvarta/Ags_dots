@@ -12,6 +12,7 @@ import Notification from "./widgets/NotificationColumn.js";
 import {WallpaperToggle, ThemeToggle} from "./widgets/Apperance.js";
 import { pickerBtn, colors } from "./widgets/Color_picker.js";
 import Radio from "./widgets/Radio.js";
+// import Vpn from "./widgets/Vpn.js";
 
 const WINDOW_NAME = "control_panel";
 
@@ -31,6 +32,7 @@ const Panel = () =>
       Header(),
       Row([NetworkToggle, BluetoothToggle], [WifiSelection, BluetoothDevices]),
       Row([Radio, ThemeToggle]),
+      // Row([Vpn,Widget.Separator]),
       Widget.Box({ 
         vertical: true,
         class_name: "sliders",

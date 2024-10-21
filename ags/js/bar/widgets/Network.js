@@ -1,8 +1,11 @@
+import { wireguard } from "../../util/functions/variableUtils.js";
+import options from "../../options.js";
 const network = await Service.import('network')
+
 export default () =>
   Widget.Box({
     spacing: 10,
-    // setup: (self) => console.log(network),
+    setup: () => console.log(network),
     children: [
       Widget.Icon({
         visible: network.wifi.bind("state").as((state) => state === "unavailable" ? false : true),
@@ -15,9 +18,25 @@ export default () =>
       }),
       Widget.Icon({
         class_name: "cyan",
-        visible: network.vpn.connections[0].bind("state").transform((state) => state === "connected" ? true : false),
-        icon:  network.vpn.connections[0].bind("icon_name"),
-        tooltip_text: network.vpn.connections[0].bind("id"),
-      })
+        // setup:(self) => console.log(network.vpn),
+        icon: network.wifi.bind("icon-name"),
+
+        visible: network.vpn.bind("activated-connections").as((con) => con.length > 0 ? true : false),
+        icon:  network.vpn.bind("activated-connections").transform((con) => {
+          if (con.length > 0) return con[0]["icon-name"];
+          return "";
+        }),
+        tooltip_text: network.vpn.bind("activated-connections").transform((con) => {
+          if (con.length > 0) return con[0].id;
+          return "";
+        }),
+      }),
+      Widget.Icon({
+        class_name: "cyan",
+        icon: options.vpn.icon,
+        size: options.vpn.size,
+        visible: wireguard.bind(),
+        tooltip_text: "Wireguard VPN",
+      }),
     ],
   });

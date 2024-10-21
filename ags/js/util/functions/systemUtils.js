@@ -1,7 +1,5 @@
 import GLib from "gi://GLib";
 import Gio from "gi://Gio";
-import Gtk from "gi://Gtk";
-import { user } from "./variableUtils.js";
 
 export function getUpTime() {
   const uptimeStr = Utils.exec("uptime");
@@ -22,6 +20,14 @@ export function isNetwork(text) {
     return false;
   }
   return true;
+}
+export function isVPN() {
+  if (Utils.exec(`bash -c "ps aux | grep wireguard | grep -v grep"`)) {
+    return true;
+  }
+  return false;
+}
+export function vpnToggle (){
 }
 export function isInstalled(programName) {
   const result = GLib.spawn_command_line_sync(`bash -c "which ${programName}"`);
@@ -47,10 +53,4 @@ export function isProcessRunning(processName) {
   }
   return false;
 }
-export function getVlcUrl() {
-  const output = Utils.exec(`bash -c "ps aux | grep vlc"`);
-  const parts = output.trim().split(' ');
-  const httpIndex = parts.findIndex((part) => part.startsWith('http://'));
-  const url = parts[httpIndex].split(`\n`)[0];
-  return url;
-}
+

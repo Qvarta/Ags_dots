@@ -29,7 +29,7 @@
     min-width: 600px;
     border-radius: 0%;
     background-color: $background;
-    box-shadow: 1px 0px 2px 0 $shadow_color;
+    box-shadow: 1px 0px 2px 0 $foreground;
     padding: 10px;
   }
   .updates_item {
@@ -60,7 +60,7 @@
     margin: 10px;
     min-width: 400px;
     background-color: $background;
-    border: 2px solid $shadow_color;
+    border: 2px solid $foreground;
     padding: 10px;
     border-radius: 10px;
     label {
@@ -85,7 +85,7 @@
   }
   spinner {
     background-color: $background;
-    border: 2px solid $shadow_color;
+    border: 2px solid $foreground;
     margin: 10px;
     padding: 10px;
     border-radius: 10px;

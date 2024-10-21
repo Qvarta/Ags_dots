@@ -1,25 +1,27 @@
 .desktopWindow {
   margin: 10px;
+  padding: 10px;
   label {
     color: $foreground;
     text-shadow: none;
   }
-  // .cava,
   .dayNow,
   .timeNow,
   .nowPlaying,
   .weatherInfo,
   .system_info {
-    margin: 0 5px;
-    padding: 10px;
+    margin: 5px;
+    padding: 5px;
+    min-height: 100px;
     box-shadow: $box_shadow;
     border-radius: 10px;
     background-color: transparentize($background, 0.2);
   }
   .system_info,
   .timeNow {
-    min-height: 120px;
     min-width: 120px;
+    min-height: 100px;
+
     .zone_text{
       font-size: 14px;
     }
@@ -62,10 +64,10 @@
     .date_digit {
       color: $background;
       box-shadow: none;
-      padding: 5px 10px;
+      padding: 10px;
       background-color: transparentize($foreground, 0.1);
       border-radius: 10px;
-      margin-right: 20px;
+      margin: 10px 20px 10px 0;
       font-size: 40px;
       font-weight: bold;
     }
